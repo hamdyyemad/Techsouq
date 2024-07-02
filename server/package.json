@@ -1,13 +1,13 @@
 {
-  "name": "login_project",
+  "name": "techsouq",
   "version": "1.0.0",
-  "description": "",
+  "description": "Techsouq is a Multinational E-commerce Website",
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "hamdyyemad, wafdy",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",

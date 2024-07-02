@@ -1,0 +1,33 @@
+@import url("https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@400;700&display=swap");
+
+@tailwind base;
+/* styles.css */
+body.loading {
+  opacity: 0.5; /* Set the desired opacity value */
+  pointer-events: none; /* Disable interaction with the page while loading */
+}
+
+/* Firefox */
+.dark {
+  scrollbar-width: thin;
+  scrollbar-color: #151729 #1c1e2d;
+}
+
+/* Chrome, Edge, and Safari */
+.dark::-webkit-scrollbar {
+  width: 15px;
+}
+
+.dark::-webkit-scrollbar-track {
+  background: #242635;
+  border-radius: 5px;
+}
+
+.dark::-webkit-scrollbar-thumb {
+  background-color: #151729;
+  border-radius: 14px;
+  border: 3px solid #242635;
+}
+
+@tailwind components;
+@tailwind utilities;

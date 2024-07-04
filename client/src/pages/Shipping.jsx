@@ -6,21 +6,26 @@ import { LazyLoadImage } from "react-lazy-load-image-component";
 import { saveShippingAddress } from "../slices/cartSlice";
 import { useTranslation } from "react-i18next";
 import { useGetMyDataQuery } from "../slices/orderApiSlice";
-import { toast } from "react-toastify";
 import { useRedirect } from "../hooks/useRedirect";
+import { useFetchCountries } from "../hooks/useFetchCountries";
+import { useFetchCities } from "../hooks/useFetchCities";
+
 import {
-  parsePhoneNumberFromString,
-  validatePhoneNumberLength,
-} from "libphonenumber-js";
+  validateAddress,
+  validateCity,
+  validatePostalCode,
+  validateCountry,
+  validatePhoneNumber,
+} from "../utils/validation";
 
 import i18n from "../i18n";
 import CustomSpinner from "../components/CustomSpinner";
 import ShippingSteps from "../components/ShippingSteps";
+
 export default function Shipping() {
   useRedirect();
   const { t } = useTranslation();
-  const [isLoadingCountry, setIsLoadingCountry] = useState(false);
-  const [isLoadingCity, setIsLoadingCity] = useState(false);
+
   const cart = useSelector((state) => state.cart);
   const { shippingAddress } = cart;
   const {
@@ -34,8 +39,6 @@ export default function Shipping() {
   );
   const [addressError, setAddressError] = useState("");
 
-  const [allCities, setAllCities] = useState([]);
-  // const [city, setCity] = useState(shippingAddress.city || "");
   const [selectedCity, setSelectedCity] = useState(
     data?.data?.shippingAddress?.city || shippingAddress?.selectedCity || null
   );
@@ -51,10 +54,9 @@ export default function Shipping() {
       shippingAddress?.phoneNumber ||
       ""
   );
-  const [reservedCodeNumber, setReservedCodeNumber] = useState("");
   const [phoneNumberCodeError, setPhoneNumberCodeError] = useState("");
+  const [reservedCodeNumber, setReservedCodeNumber] = useState("");
 
-  const [allCountries, setAllCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(
     data?.data?.shippingAddress?.country ||
       shippingAddress?.selectedCountry ||
@@ -64,219 +66,57 @@ export default function Shipping() {
 
   const [isClearPressed, setIsClearPressed] = useState(false);
 
+  const {
+    allCountries,
+    isLoadingCountry,
+    countryError: fetchCountryError,
+    fetchCountries,
+    handleCountryChange,
+    handleCountryMenuOpen,
+  } = useFetchCountries(
+    setSelectedCity,
+    setReservedCodeNumber,
+    setPhoneNumber,
+    setSelectedCountry
+  );
+
+  const {
+    allCities,
+    isLoadingCity,
+    cityError: fetchCityError,
+    fetchCities,
+    handleCityChange,
+    handleCityMenuOpen,
+  } = useFetchCities(selectedCountry, setSelectedCity, setIsClearPressed, isClearPressed);
+
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
 
-  // const excludeFlags = [
-  //   "BL",
-  //   "BQ",
-  //   "BV",
-  //   "GF",
-  //   "GP",
-  //   "HM",
-  //   "IQ",
-  //   "SX",
-  //   "SJ",
-  //   "PM",
-  //   "UM",
-  //   "XK",
-  // ];
-  function handleFetchCountry() {
-    // Fetch countries from GeoNames API
-    const fetchCountries = async () => {
-      try {
-        setIsLoadingCountry(true);
-        // "client-id": `${import.meta.env.VITE_CLIENT_ID}`,
-        const response = await fetch(
-          `http://api.geonames.org/countryInfoJSON?username=${
-            import.meta.env.VITE_COUNTRY_USERNAME
-          }`
-        );
-        const data = await response.json();
-        // Extract relevant information from the API response
-        const countriesData = data?.geonames.map((country) => ({
-          value: country.countryCode,
-          label: country.countryName,
-          // Add the country flag URL to each option
-          // https://flagsapi.com/EG/flat/32.png
-          // ${
-
-          //     ? ""
-          //     : country.countryCode
-          // }
-          image: `${
-            [
-              "BL",
-              "BQ",
-              "BV",
-              "GF",
-              "GP",
-              "HM",
-              "IO",
-              "SX",
-              "SJ",
-              "PM",
-              "UM",
-              "XK",
-            ].includes(country.countryCode)
-              ? ""
-              : `https://flagsapi.com/${country.countryCode}/flat/24.png`
-          }`,
-        }));
-
-        setAllCountries(countriesData);
-        setIsLoadingCountry(false);
-      } catch (error) {
-        setCountryError(`Error fetching countries: ${error}`);
-      }
-    };
-
-    fetchCountries();
-  }
-
-  function handleFetchCity() {
-    const fetchCities = async () => {
-      if (selectedCountry) {
-        try {
-          setIsLoadingCity(true);
-          let response;
-          console.log(selectedCountry);
-          if (!selectedCountry.value) {
-            const code_response = await fetch(
-              `http://api.geonames.org/searchJSON?q=${selectedCountry}&featureClass=A&featureCode=PCLI&maxRows=1&username=${
-                import.meta.env.VITE_COUNTRY_USERNAME
-              }`
-            );
-            const data2 = await code_response.json();
-
-            response = await fetch(
-              `http://api.geonames.org/searchJSON?country=${
-                data2.geonames[0].countryCode
-              }&username=${import.meta.env.VITE_COUNTRY_USERNAME}`
-            );
-          } else {
-            response = await fetch(
-              `http://api.geonames.org/searchJSON?country=${
-                selectedCountry.value
-              }&username=${import.meta.env.VITE_COUNTRY_USERNAME}`
-            );
-          }
-          const data = await response.json();
-          console.log(data);
-          const citiesData = data.geonames.map((city) => {
-            if (city.name === selectedCountry.label) return {};
-            return {
-              value: city.geonameId,
-              label: city.name,
-            };
-          });
-
-          setAllCities(citiesData);
-          setIsLoadingCity(false);
-          return true;
-        } catch (error) {
-          setCityError(`Error fetching cities: ${error}`);
-          return false;
-        }
-      }
-    };
-
-    fetchCities();
-  }
-
-  const handleCountryChange = (selectedOption) => {
-    setSelectedCountry(selectedOption);
-    setCountryError("");
-    // Reset city when country changes
-    setSelectedCity(null);
-    const phoneNumberInstance = parsePhoneNumberFromString(
-      "2222",
-      selectedOption.value
-    );
-    console.log(phoneNumberInstance);
-    setReservedCodeNumber(phoneNumberInstance?.countryCallingCode);
-  };
-  const handleCityChange = (selectedOption) => {
-    setSelectedCity(selectedOption);
-  };
-  const validateAddress = () => {
-    if (!address) {
-      setAddressError("Address is required");
-    } else {
-      setAddressError("");
-    }
-  };
-  const validateCity = () => {
-    if (!selectedCity) {
-      setCityError("City is required");
-    } else {
-      setCityError("");
-    }
-  };
-
-  const validatePostalCode = () => {
-    if (!postalCode.trim()) {
-      setPostalCodeError("Postal Code is required");
-    } else {
-      setPostalCodeError("");
-    }
-  };
-
-  const validateCountry = () => {
-    if (!selectedCountry) {
-      setCountryError("Country is required");
-    } else {
-      setCountryError("");
-    }
-  };
-
-  const validatePhoneNumber = (phoneNumber) => {
-    console.log(phoneNumber);
-    if (!phoneNumber) {
-      setPhoneNumberCodeError("Phone Number is required");
-    } else {
-      const phoneNumberInstance = parsePhoneNumberFromString(
-        phoneNumber,
-        selectedCountry.value
-      );
-
-      console.log(phoneNumberInstance);
-      console.log(
-        validatePhoneNumberLength(phoneNumber, selectedCountry.value)
-      );
-      const check =
-        phoneNumberInstance &&
-        phoneNumber.length >= phoneNumberInstance?.countryCallingCode.length
-          ? phoneNumber.slice(phoneNumberInstance?.countryCallingCode.length)
-          : "2";
-      if (
-        !phoneNumberInstance ||
-        !phoneNumberInstance.isValid() ||
-        !phoneNumberInstance.isPossible() ||
-        validatePhoneNumberLength(check, selectedCountry.value)
-      ) {
-        setPhoneNumberCodeError("Invalid Phone Number");
-      } else {
-        setPhoneNumberCodeError("");
-      }
-    }
-  };
-
   function handleSubmit(e) {
     e.preventDefault();
-    validateAddress();
-    validateCity();
-    validateCountry();
-    validatePostalCode();
-    validatePhoneNumber();
+
+    const addressError = validateAddress(address);
+    const cityError = validateCity(selectedCity);
+    const countryError = validateCountry(selectedCountry);
+    const postalCodeError = validatePostalCode(postalCode);
+    const phoneNumberCodeError = validatePhoneNumber(
+      phoneNumber,
+      selectedCountry
+    );
+
+    setAddressError(addressError);
+    setCityError(cityError);
+    setCountryError(countryError);
+    setPostalCodeError(postalCodeError);
+    setPhoneNumberCodeError(phoneNumberCodeError);
 
     if (
-      address &&
-      selectedCity &&
-      postalCode &&
-      selectedCountry &&
-      phoneNumber
+      !addressError &&
+      !cityError &&
+      !countryError &&
+      !postalCodeError &&
+      !phoneNumberCodeError
     ) {
       dispatch(
         saveShippingAddress({
@@ -341,22 +181,6 @@ export default function Shipping() {
       </div>
     );
   };
-  const handleCountryMenuOpen = () => {
-    if (allCountries.length === 0) {
-      handleFetchCountry();
-      setPhoneNumber("");
-    }
-  };
-
-  const handleCityMenuOpen = async () => {
-    setIsClearPressed(false);
-    if (selectedCountry) {
-      const fetchCitySuccess = await handleFetchCity();
-      if (!fetchCitySuccess && !allCities.length && isClearPressed) {
-        toast.error("Please Select a Country again");
-      }
-    }
-  };
 
   useEffect(() => {
     if (data?.data?.shippingAddress) {
@@ -398,8 +222,9 @@ export default function Shipping() {
                   value={address}
                   onChange={(e) => {
                     setAddress(e.target.value);
-                    validateAddress();
+                    setAddressError("");
                   }}
+                  onBlur={() => setAddressError(validateAddress(address))}
                   type="text"
                   id="address"
                   className="w-full border py-2 px-3"
@@ -444,7 +269,7 @@ export default function Shipping() {
                     value={selectedCountry}
                     onChange={handleCountryChange}
                     onMenuOpen={handleCountryMenuOpen}
-                    onClick={handleFetchCountry}
+                    onClick={fetchCountries}
                     options={allCountries}
                     isLoading={isLoadingCountry}
                     id="country"
@@ -455,6 +280,11 @@ export default function Shipping() {
                 )}
 
                 <p className="text-red-500">{countryError}</p>
+                {fetchCountryError && (
+                  <span className="text-red-500 text-sm">
+                    {fetchCountryError}
+                  </span>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-4 mt-4">
@@ -492,7 +322,7 @@ export default function Shipping() {
                       value={selectedCity}
                       onChange={handleCityChange}
                       onMenuOpen={handleCityMenuOpen}
-                      onClick={() => handleFetchCity()}
+                      onClick={() => fetchCities(selectedCountry)}
                       options={allCities}
                       isLoading={isLoadingCity}
                       isDisabled={!selectedCountry}
@@ -503,7 +333,14 @@ export default function Shipping() {
                     />
                   )}
 
-                  <p className="text-red-500">{cityError}</p>
+                  {cityError && (
+                    <span className="text-red-500 text-sm">{cityError}</span>
+                  )}
+                  {fetchCityError && (
+                    <span className="text-red-500 text-sm">
+                      {fetchCityError}
+                    </span>
+                  )}
                 </div>
                 <div>
                   <label
@@ -522,10 +359,13 @@ export default function Shipping() {
                         ""
                       );
                       setPhoneNumber(() => numericValue);
-                      validatePhoneNumber(numericValue);
+                      setPhoneNumberCodeError("");
                     }}
                     id="postal"
                     className="w-full border py-2 px-3"
+                    onBlur={() =>
+                      setPhoneNumberCodeError(validatePhoneNumber(phoneNumber))
+                    }
                   />
                   <p className="text-red-500">{phoneNumberCodeError}</p>
                 </div>

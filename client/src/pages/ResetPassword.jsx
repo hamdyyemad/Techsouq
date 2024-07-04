@@ -121,30 +121,8 @@ export default function ResetPassword() {
               <p className="px-2">{t("reset_password.reset")}</p>
             </span>
           </Button>
-          {/* <p className="text-center dark:text-white">
-            {t("reset_password.not_registered")}
-            {i18n.dir() === "rtl" ? "؟" : "?"}{" "}
-            <Link
-              to="/register"
-              className="text-indigo-600 font-medium inline-flex space-x-1 items-center"
-            >
-              <span>{t("reset_password.register")} </span>
-              <span>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                </svg>
-              </span>
-            </Link>
-          </p> */}
         </div>
       </form>
-      {/* </div> */}
     </Card>
   );
 }

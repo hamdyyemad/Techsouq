@@ -24,29 +24,35 @@ export default function Shipping() {
     // error
   } = useGetMyDataQuery();
 
-  const [address, setAddress] = useState(shippingAddress.address || "");
+  const [address, setAddress] = useState(
+    data?.data?.shippingAddress?.address || shippingAddress?.address || ""
+  );
   const [addressError, setAddressError] = useState("");
 
   const [allCities, setAllCities] = useState([]);
   // const [city, setCity] = useState(shippingAddress.city || "");
   const [selectedCity, setSelectedCity] = useState(
-    shippingAddress.selectedCity || null
+    data?.data?.shippingAddress?.city || shippingAddress?.selectedCity || null
   );
   const [cityError, setCityError] = useState("");
 
   const [postalCode, setPostalCode] = useState(
-    shippingAddress.postalCode || ""
+    data?.data?.shippingAddress?.postalCode || shippingAddress?.postalCode || ""
   );
   const [postalCodeError, setPostalCodeError] = useState("");
 
   const [phoneNumber, setPhoneNumber] = useState(
-    shippingAddress.phoneNumber || ""
+    data?.data?.shippingAddress?.phoneNumber ||
+      shippingAddress?.phoneNumber ||
+      ""
   );
   const [phoneNumberCodeError, setPhoneNumberCodeError] = useState("");
 
   const [allCountries, setAllCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(
-    shippingAddress.selectedCountry || null
+    data?.data?.shippingAddress?.country ||
+      shippingAddress?.selectedCountry ||
+      null
   );
   const [countryError, setCountryError] = useState("");
 
@@ -55,7 +61,7 @@ export default function Shipping() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-
+  console.log(data);
   // const excludeFlags = [
   //   "BL",
   //   "BQ",

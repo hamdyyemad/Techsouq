@@ -34,9 +34,9 @@ export default function Profile() {
   ) {
     // Use the shippingAddress from the first order if available
     shippingAddress = order[order.length - 1]?.shippingAddress;
-    console.log(shippingAddress);
+    console.log(cart);
   }
-
+  console.log(orders);
   const dispatch = useDispatch();
 
   return (

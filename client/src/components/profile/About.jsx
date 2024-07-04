@@ -210,7 +210,8 @@ export default function About({
                       {t("profile.city")}:
                     </div>
                     <div className="px-4 py-2 dark:text-white">
-                      {shippingAddress?.selectedCity?.label}
+                      {shippingAddress?.city ||
+                        shippingAddress?.selectedCity?.label}
                     </div>
                   </div>
                 </>
@@ -232,7 +233,8 @@ export default function About({
                       {t("profile.country")}:
                     </div>
                     <div className="px-4 py-2 dark:text-white">
-                      {shippingAddress?.selectedCountry?.label}
+                      {shippingAddress?.country ||
+                        shippingAddress?.selectedCountry?.label}
                     </div>
                   </div>
                   <div className="grid grid-cols-2 xs:grid-cols-2">

@@ -70,8 +70,11 @@ export default function Shipping() {
     const fetchCountries = async () => {
       try {
         setIsLoadingCountry(true);
+        // "client-id": `${import.meta.env.VITE_CLIENT_ID}`,
         const response = await fetch(
-          "http://api.geonames.org/countryInfoJSON?username=xxxatlas69"
+          `http://api.geonames.org/countryInfoJSON?username=${
+            import.meta.env.VITE_COUNTRY_USERNAME
+          }`
         );
         const data = await response.json();
         // Extract relevant information from the API response
@@ -121,7 +124,9 @@ export default function Shipping() {
         try {
           setIsLoadingCity(true);
           const response = await fetch(
-            `http://api.geonames.org/searchJSON?country=${selectedCountry.value}&username=xxxatlas69`
+            `http://api.geonames.org/searchJSON?country=${
+              selectedCountry.value
+            }&username=${import.meta.env.VITE_COUNTRY_USERNAME}`
           );
           const data = await response.json();
 
@@ -288,9 +293,9 @@ export default function Shipping() {
 
   if (isLoading) return <CustomSpinner />;
   return (
-    <div className="bg-gray-100 dark:bg-[#1C1E2D] h-screen w-full">
-      <div className="w-full max-w-3xl mx-auto p-8">
-        <div className="bg-white dark:bg-[#1C1E2D] p-8 rounded-lg shadow-md border dark:border-[#242635]">
+    <div className="bg-gray-100 dark:bg-[#1C1E2D] h-screen w-full xs:h-full">
+      <div className="w-full max-w-3xl mx-auto p-8 xs:p-0">
+        <div className="bg-white dark:bg-[#1C1E2D] p-8 rounded-lg shadow-md border dark:border-[#242635] xs:p-5">
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
             {t("order.checkout")}
           </h1>
@@ -468,43 +473,47 @@ export default function Shipping() {
 }
 function ShippingSteps() {
   return (
-    <div className="flex items-center justify-center mb-3">
-      <Link
-        to="/cart"
-        className="flex text-sm text-blue-500 focus:outline-none"
-      >
-        <span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">
-          1
-        </span>{" "}
-        Cart
-      </Link>
-      <button
-        className="flex text-sm text-gray-700 ml-8 focus:outline-none"
-        disabled
-      >
-        <span className="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">
-          2
-        </span>{" "}
-        Shipping
-      </button>
-      <button
-        className="flex text-sm text-gray-500 ml-8 focus:outline-none"
-        disabled
-      >
-        <span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">
-          3
-        </span>{" "}
-        Payments
-      </button>
-      <button
-        className="flex text-sm text-gray-500 ml-8 focus:outline-none"
-        disabled
-      >
-        <span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">
-          4
-        </span>{" "}
-        Place Order
-      </button>
+    <div className="grid grid-cols-2 items-center justify-center mb-3  xs:w-full xs:grid-cols-1">
+      <div className="grid grid-cols-2 ">
+        <Link
+          to="/cart"
+          className="flex text-sm text-blue-500 focus:outline-none xs:w-[25%] xs:grid xs:grid-cols-2"
+        >
+          <span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">
+            1
+          </span>{" "}
+          <p className="xs:ml-2">Cart</p>
+        </Link>
+        <button
+          className="flex text-sm text-gray-700 ml-8 focus:outline-none xs:w-[25%] xs:grid xs:grid-cols-2"
+          disabled
+        >
+          <span className="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">
+            2
+          </span>{" "}
+          <p className="xs:ml-2">Shipping</p>
+        </button>
+      </div>
+      <div className="grid grid-cols-2 xs:pt-3">
+        <button
+          className="flex text-sm text-gray-500 ml-8 focus:outline-none  xs:m-0 xs:w-[25%] xs:grid xs:grid-cols-2"
+          disabled
+        >
+          <span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">
+            3
+          </span>{" "}
+          <p className="xs:ml-2">Payments</p>
+        </button>
+        <button
+          className="flex text-sm text-gray-500 ml-8 focus:outline-none xs:w-[25%] xs:grid xs:grid-cols-2"
+          disabled
+        >
+          <span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2 xs:m-0">
+            4
+          </span>{" "}
+          <p className="xs:whitespace-nowrap xs:ml-2">Place Order</p>
+        </button>
+      </div>
     </div>
   );
 }

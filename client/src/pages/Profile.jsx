@@ -33,23 +33,23 @@ export default function Profile() {
     order[0]?.shippingAddress
   ) {
     // Use the shippingAddress from the first order if available
-    shippingAddress = order[0]?.shippingAddress;
+    shippingAddress = order[order.length - 1]?.shippingAddress;
     console.log(shippingAddress);
   }
 
   const dispatch = useDispatch();
 
   return (
-    <div className="xs:min-w-max bg-gray-100 w-full h-screen	dark:bg-[#151725]">
+    <div className="xs:min-w-max bg-gray-100 w-full h-screen	dark:bg-[#151725] xs:bg-white">
       <div className="min-w-fit container mx-auto  p-5 xs:p-0">
-        <div className="md:flex no-wrap md:-mx-2 ">
+        <div className="md:flex no-wrap md:-mx-2 xs:h-screen">
           {/* <!-- Left Side --> */}
           {/* <div className="w-full md:w-3/12 md:mx-2"> */}
           {/* <ProfileCard user={user} /> */}
           {/* <div className="my-4"></div> */}
           {/* </div> */}
           {/* <!-- Right Side --> */}
-          <div className="w-full h-96 xs:w-screen xs:m-auto p-4 m-auto">
+          <div className="w-full h-96 xs:w-screen xs:m-auto p-4 m-auto xs:flex xs:flex-col xs:h-screen">
             <About
               user={user}
               shippingAddress={shippingAddress}

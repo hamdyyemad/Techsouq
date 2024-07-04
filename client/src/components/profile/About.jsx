@@ -180,7 +180,7 @@ export default function About({
           </div>
           <div className="text-gray-700">
             <div className="grid md:grid-cols-2 text-sm ">
-              <div className="grid grid-cols-2 xs:grid-cols-1">
+              <div className="grid grid-cols-2 xs:grid-cols-2">
                 <div className="px-4 py-2 font-semibold dark:text-white">
                   {t("profile.first_name")}:
                 </div>
@@ -188,23 +188,16 @@ export default function About({
                   {user.firstname}
                 </div>
               </div>
-              <div className="grid grid-cols-2 xs:grid-cols-1">
+              <div className="grid grid-cols-2 xs:grid-cols-2">
                 <div className="px-4 py-2 font-semibold dark:text-white">
                   {t("profile.last_name")}:
                 </div>
                 <div className="px-4 py-2 dark:text-white">{user.lastname}</div>
               </div>
-              <div className="grid grid-cols-2 xs:grid-cols-1">
-                {/* <div className="px-4 py-2 font-semibold">Gender</div>
-                      <div className="px-4 py-2">Female</div> */}
-              </div>
-              <div className="grid grid-cols-2 xs:grid-cols-1">
-                {/* <div className="px-4 py-2 font-semibold">Contact No.</div>
-                      <div className="px-4 py-2">+11 998001001</div> */}
-              </div>
+
               {user?.role === "USER" && (
                 <>
-                  <div className="grid grid-cols-2 xs:grid-cols-1">
+                  <div className="grid grid-cols-2 xs:grid-cols-2">
                     <div className="px-4 py-2 font-semibold dark:text-white">
                       {t("profile.current_address")}:
                     </div>
@@ -212,7 +205,7 @@ export default function About({
                       {shippingAddress?.address}
                     </div>
                   </div>
-                  <div className="grid grid-cols-2 xs:grid-cols-1">
+                  <div className="grid grid-cols-2 xs:grid-cols-2">
                     <div className="px-4 py-2 font-semibold dark:text-white">
                       {t("profile.city")}:
                     </div>
@@ -222,8 +215,8 @@ export default function About({
                   </div>
                 </>
               )}
-              <div className="grid grid-cols-2 xs:grid-cols-1">
-                <div className="px-4 py-2 font-semibold dark:text-white">
+              <div className="grid grid-cols-2 xs:grid-cols-2 ">
+                <div className="px-4 py-2 font-semibold dark:text-white xs:col-span-2">
                   {t("profile.email")}:
                 </div>
                 <div className="px-4 py-2">
@@ -233,14 +226,24 @@ export default function About({
                 </div>
               </div>
               {user?.role === "USER" && (
-                <div className="grid grid-cols-2">
-                  <div className="px-4 py-2 font-semibold dark:text-white">
-                    {t("profile.country")}:
+                <>
+                  <div className="grid grid-cols-2 xs:grid-cols-2">
+                    <div className="px-4 py-2 font-semibold dark:text-white">
+                      {t("profile.country")}:
+                    </div>
+                    <div className="px-4 py-2 dark:text-white">
+                      {shippingAddress?.selectedCountry?.label}
+                    </div>
                   </div>
-                  <div className="px-4 py-2 dark:text-white">
-                    {shippingAddress?.selectedCountry?.label}
+                  <div className="grid grid-cols-2 xs:grid-cols-2">
+                    <div className="px-4 py-2 font-semibold dark:text-white">
+                      Phone Number:
+                    </div>
+                    <div className="px-4 py-2 dark:text-white">
+                      {shippingAddress?.phoneNumber}
+                    </div>
                   </div>
-                </div>
+                </>
               )}
             </div>
           </div>

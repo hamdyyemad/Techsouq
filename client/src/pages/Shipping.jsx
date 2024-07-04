@@ -8,7 +8,10 @@ import { useTranslation } from "react-i18next";
 import { useGetMyDataQuery } from "../slices/orderApiSlice";
 import { toast } from "react-toastify";
 import { useRedirect } from "../hooks/useRedirect";
-import { parsePhoneNumberFromString } from "libphonenumber-js";
+import {
+  parsePhoneNumberFromString,
+  validatePhoneNumberLength,
+} from "libphonenumber-js";
 
 import i18n from "../i18n";
 import CustomSpinner from "../components/CustomSpinner";
@@ -188,9 +191,10 @@ export default function Shipping() {
     // Reset city when country changes
     setSelectedCity(null);
     const phoneNumberInstance = parsePhoneNumberFromString(
-      phoneNumber,
+      "2222",
       selectedOption.value
     );
+    console.log(phoneNumberInstance);
     setReservedCodeNumber(phoneNumberInstance?.countryCallingCode);
   };
   const handleCityChange = (selectedOption) => {
@@ -227,7 +231,8 @@ export default function Shipping() {
     }
   };
 
-  const validatePhoneNumber = () => {
+  const validatePhoneNumber = (phoneNumber) => {
+    console.log(phoneNumber);
     if (!phoneNumber) {
       setPhoneNumberCodeError("Phone Number is required");
     } else {
@@ -235,9 +240,22 @@ export default function Shipping() {
         phoneNumber,
         selectedCountry.value
       );
-      setReservedCodeNumber(phoneNumberInstance?.countryCallingCode);
 
-      if (!phoneNumberInstance || !phoneNumberInstance.isValid()) {
+      console.log(phoneNumberInstance);
+      console.log(
+        validatePhoneNumberLength(phoneNumber, selectedCountry.value)
+      );
+      const check =
+        phoneNumberInstance &&
+        phoneNumber.length >= phoneNumberInstance?.countryCallingCode.length
+          ? phoneNumber.slice(phoneNumberInstance?.countryCallingCode.length)
+          : "2";
+      if (
+        !phoneNumberInstance ||
+        !phoneNumberInstance.isValid() ||
+        !phoneNumberInstance.isPossible() ||
+        validatePhoneNumberLength(check, selectedCountry.value)
+      ) {
         setPhoneNumberCodeError("Invalid Phone Number");
       } else {
         setPhoneNumberCodeError("");
@@ -326,6 +344,7 @@ export default function Shipping() {
   const handleCountryMenuOpen = () => {
     if (allCountries.length === 0) {
       handleFetchCountry();
+      setPhoneNumber("");
     }
   };
 
@@ -411,6 +430,7 @@ export default function Shipping() {
                       onClick={() => {
                         setSelectedCountry(null);
                         setSelectedCity(null);
+                        setPhoneNumber("");
                       }}
                       className={`absolute ${
                         i18n.dir() === "rtl" ? "left-0" : "right-0"
@@ -501,8 +521,8 @@ export default function Shipping() {
                         /[^0-9]/g,
                         ""
                       );
-                      setPhoneNumber(numericValue);
-                      validatePhoneNumber();
+                      setPhoneNumber(() => numericValue);
+                      validatePhoneNumber(numericValue);
                     }}
                     id="postal"
                     className="w-full border py-2 px-3"

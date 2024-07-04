@@ -1,8 +1,9 @@
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { savePaymentMethod } from "../slices/cartSlice";
 import { useTranslation } from "react-i18next";
+import ShippingSteps from "../components/ShippingSteps";
 export default function Payment() {
   const navigate = useNavigate();
   const cart = useSelector((state) => state.cart);
@@ -21,13 +22,13 @@ export default function Payment() {
     navigate("/placeorder");
   }
   return (
-    <div className="bg-gray-100 dark:bg-[#1C1E2D] h-screen w-full">
-      <div className="w-full max-w-3xl mx-auto p-8">
-        <div className="bg-white dark:bg-[#1C1E2D] p-8 rounded-lg shadow-md border dark:border-[#242635] flex flex-col">
+    <div className="bg-gray-100 dark:bg-[#1C1E2D] h-screen w-full xs:h-full">
+      <div className="w-full max-w-3xl mx-auto p-8 xs:p-0">
+        <div className="bg-white dark:bg-[#1C1E2D] p-8 rounded-lg shadow-md border dark:border-[#242635] xs:p-5">
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
             {t("order.payment")}
           </h1>
-          <ShippingSteps />
+          <ShippingSteps currentStep={3} />
           <div className="mt-8 flex justify-center items-center">
             <button
               type="submit"
@@ -57,97 +58,3 @@ export default function Payment() {
     </div>
   );
 }
-function ShippingSteps() {
-  return (
-    <div className="flex items-center justify-center mb-3">
-      <Link
-        to="/cart"
-        className="flex text-sm text-blue-500 focus:outline-none"
-      >
-        <span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">
-          1
-        </span>{" "}
-        Cart
-      </Link>
-      <Link
-        to="/shipping"
-        className="flex text-sm text-blue-500 ml-8 focus:outline-none"
-      >
-        <span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">
-          2
-        </span>{" "}
-        Shipping
-      </Link>
-      <button
-        className="flex text-sm text-gray-700 ml-8 focus:outline-none"
-        disabled
-      >
-        <span className="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">
-          3
-        </span>{" "}
-        Payments
-      </button>
-      <button
-        className="flex text-sm text-gray-500 ml-8 focus:outline-none"
-        disabled
-      >
-        <span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">
-          4
-        </span>{" "}
-        Place Order
-      </button>
-    </div>
-  );
-}
-
-// function PaymentInfo() {
-//   return (
-//     <div>
-//       <h2 className="text-xl font-semibold text-gray-700 dark:text-white mb-2">
-//         Payment Information
-//       </h2>
-//       <div className="mt-4">
-//         <label
-//           htmlFor="card_number"
-//           className="block text-gray-700 dark:text-white mb-1"
-//         >
-//           Card Number
-//         </label>
-//         <input
-//           type="text"
-//           id="card_number"
-//           className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
-//         />
-//       </div>
-
-//       <div className="grid grid-cols-2 gap-4 mt-4">
-//         <div>
-//           <label
-//             htmlFor="exp_date"
-//             className="block text-gray-700 dark:text-white mb-1"
-//           >
-//             Expiration Date
-//           </label>
-//           <input
-//             type="text"
-//             id="exp_date"
-//             className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
-//           />
-//         </div>
-//         <div>
-//           <label
-//             htmlFor="cvv"
-//             className="block text-gray-700 dark:text-white mb-1"
-//           >
-//             CVV
-//           </label>
-//           <input
-//             type="text"
-//             id="cvv"
-//             className="w-full rounded-lg border py-2 px-3 dark:bg-gray-700 dark:text-white dark:border-none"
-//           />
-//         </div>
-//       </div>
-//     </div>
-//   );
-// }

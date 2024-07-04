@@ -30,13 +30,14 @@ export default function PlaceOrder() {
   }, [subs.paymentMethod, subs.shippingAddress.address, navigate]);
   console.log(subs);
   const placeOrderHandler = async () => {
-    const { address, postalCode, selectedCity, selectedCountry } =
+    const { address, postalCode, selectedCity, selectedCountry, phoneNumber } =
       subs.shippingAddress;
     const shipAdd = {
       address,
       postalCode,
-      city: selectedCity || selectedCity?.label,
-      country: selectedCountry || selectedCountry?.label,
+      city: selectedCity?.label,
+      country: selectedCountry?.label,
+      phoneNumber,
     };
 
     try {

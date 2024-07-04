@@ -1,16 +1,16 @@
 import Select from "react-select";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 import { saveShippingAddress } from "../slices/cartSlice";
 import { useTranslation } from "react-i18next";
 import { useGetMyDataQuery } from "../slices/orderApiSlice";
 import { toast } from "react-toastify";
 import { useRedirect } from "../hooks/useRedirect";
-
 import i18n from "../i18n";
 import CustomSpinner from "../components/CustomSpinner";
+import ShippingSteps from "../components/ShippingSteps";
 export default function Shipping() {
   useRedirect();
   const { t } = useTranslation();
@@ -38,6 +38,11 @@ export default function Shipping() {
     shippingAddress.postalCode || ""
   );
   const [postalCodeError, setPostalCodeError] = useState("");
+
+  const [phoneNumber, setPhoneNumber] = useState(
+    shippingAddress.phoneNumber || ""
+  );
+  const [phoneNumberCodeError, setPhoneNumberCodeError] = useState("");
 
   const [allCountries, setAllCountries] = useState([]);
   const [selectedCountry, setSelectedCountry] = useState(
@@ -191,20 +196,36 @@ export default function Shipping() {
     }
   };
 
+  const validatePhoneNumber = () => {
+    if (!phoneNumber) {
+      setPhoneNumberCodeError("Phone Number is required");
+    } else {
+      setPhoneNumberCodeError("");
+    }
+  };
+
   function handleSubmit(e) {
     e.preventDefault();
     validateAddress();
     validateCity();
     validateCountry();
     validatePostalCode();
+    validatePhoneNumber();
 
-    if (address && selectedCity && postalCode && selectedCountry) {
+    if (
+      address &&
+      selectedCity &&
+      postalCode &&
+      selectedCountry &&
+      phoneNumber
+    ) {
       dispatch(
         saveShippingAddress({
-          address,
+          address: address.trim(),
           selectedCity,
           postalCode,
           selectedCountry,
+          phoneNumber,
         })
       );
       navigate("/payment");
@@ -299,7 +320,7 @@ export default function Shipping() {
           <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4">
             {t("order.checkout")}
           </h1>
-          <ShippingSteps />
+          <ShippingSteps currentStep={2} />
           {/* <!-- Shipping Address --> */}
           <ShippingAddress>
             <form className="mb-6" onSubmit={(e) => handleSubmit(e)}>
@@ -317,9 +338,7 @@ export default function Shipping() {
                 <input
                   value={address}
                   onChange={(e) => {
-                    const trimmedAddress = e.target.value.trimStart().trimEnd();
-
-                    setAddress(trimmedAddress);
+                    setAddress(e.target.value);
                     validateAddress();
                   }}
                   type="text"
@@ -428,6 +447,29 @@ export default function Shipping() {
                 </div>
                 <div>
                   <label
+                    htmlFor="phoneNumber"
+                    className="block text-gray-700 dark:text-white mb-1"
+                  >
+                    Phone Number
+                  </label>
+                  <input
+                    type="text"
+                    value={phoneNumber}
+                    onChange={(e) => {
+                      const numericValue = e.target.value.replace(
+                        /[^0-9]/g,
+                        ""
+                      );
+                      setPhoneNumber(numericValue);
+                      validatePhoneNumber();
+                    }}
+                    id="postal"
+                    className="w-full border py-2 px-3"
+                  />
+                  <p className="text-red-500">{phoneNumberCodeError}</p>
+                </div>
+                <div>
+                  <label
                     htmlFor="postal"
                     className="block text-gray-700 dark:text-white mb-1"
                   >
@@ -455,7 +497,11 @@ export default function Shipping() {
                   type="submit"
                   className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-700 dark:bg-blue-500 dark:text-white dark:hover:bg-blue-700"
                   disabled={
-                    addressError || cityError || postalCodeError || countryError
+                    addressError ||
+                    cityError ||
+                    postalCodeError ||
+                    countryError ||
+                    phoneNumberCodeError
                   }
                 >
                   {t("order.go_to_payment")}
@@ -467,52 +513,6 @@ export default function Shipping() {
           {/* <!-- Payment Information --> */}
           {/* <PaymentInfo /> */}
         </div>
-      </div>
-    </div>
-  );
-}
-function ShippingSteps() {
-  return (
-    <div className="grid grid-cols-2 items-center justify-center mb-3  xs:w-full xs:grid-cols-1">
-      <div className="grid grid-cols-2 ">
-        <Link
-          to="/cart"
-          className="flex text-sm text-blue-500 focus:outline-none xs:w-[25%] xs:grid xs:grid-cols-2"
-        >
-          <span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">
-            1
-          </span>{" "}
-          <p className="xs:ml-2">Cart</p>
-        </Link>
-        <button
-          className="flex text-sm text-gray-700 ml-8 focus:outline-none xs:w-[25%] xs:grid xs:grid-cols-2"
-          disabled
-        >
-          <span className="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">
-            2
-          </span>{" "}
-          <p className="xs:ml-2">Shipping</p>
-        </button>
-      </div>
-      <div className="grid grid-cols-2 xs:pt-3">
-        <button
-          className="flex text-sm text-gray-500 ml-8 focus:outline-none  xs:m-0 xs:w-[25%] xs:grid xs:grid-cols-2"
-          disabled
-        >
-          <span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2">
-            3
-          </span>{" "}
-          <p className="xs:ml-2">Payments</p>
-        </button>
-        <button
-          className="flex text-sm text-gray-500 ml-8 focus:outline-none xs:w-[25%] xs:grid xs:grid-cols-2"
-          disabled
-        >
-          <span className="flex items-center justify-center border-2 border-gray-500 rounded-full h-5 w-5 mr-2 xs:m-0">
-            4
-          </span>{" "}
-          <p className="xs:whitespace-nowrap xs:ml-2">Place Order</p>
-        </button>
       </div>
     </div>
   );

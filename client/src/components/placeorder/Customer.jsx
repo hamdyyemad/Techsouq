@@ -1,4 +1,5 @@
 export default function Customer({ user, subs }) {
+  console.log(subs);
   return (
     <>
       <h3 className="text-xl dark:text-white  font-semibold  text-gray-800">
@@ -20,11 +21,8 @@ export default function Customer({ user, subs }) {
             </p>
             <p className="w-50 lg:w-full dark:text-gray-300 xl:w-48 text-center md:text-left text-sm leading-5 text-gray-600 pb-4 border-b border-gray-200">
               {subs?.shippingAddress?.address} /{" "}
-              {subs?.shippingAddress?.selectedCity ||
-                subs?.shippingAddress?.selectedCity.label}{" "}
-              /{" "}
-              {subs?.shippingAddress?.selectedCountry ||
-                subs?.shippingAddress?.selectedCountry.label}
+              {subs?.shippingAddress?.selectedCity.label} /{" "}
+              {subs?.shippingAddress?.selectedCountry.label}
             </p>
           </div>
           <div className="flex justify-center md:justify-start items-center md:items-start flex-col space-y-4 xl:mt-8 mt-6 w-full">

@@ -68,7 +68,7 @@ export default function About({
     // Reset the edit mode after saving
     setIsEdit(false);
   };
-
+  console.log(shippingAddress);
   return (
     <div className="bg-white p-3 pb-0 shadow-sm rounded-sm  dark:bg-[#1C1E2D] xs:p-auto ">
       {isEdit ? (
@@ -217,7 +217,7 @@ export default function About({
                       {t("profile.city")}:
                     </div>
                     <div className="px-4 py-2 dark:text-white">
-                      {shippingAddress?.city || shippingAddress?.selectedCity}
+                      {shippingAddress?.selectedCity?.label}
                     </div>
                   </div>
                 </>
@@ -238,8 +238,7 @@ export default function About({
                     {t("profile.country")}:
                   </div>
                   <div className="px-4 py-2 dark:text-white">
-                    {shippingAddress?.country ||
-                      shippingAddress?.selectedCountry}
+                    {shippingAddress?.selectedCountry?.label}
                   </div>
                 </div>
               )}

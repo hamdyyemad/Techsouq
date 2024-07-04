@@ -8,6 +8,8 @@ import { useTranslation } from "react-i18next";
 import { useGetMyDataQuery } from "../slices/orderApiSlice";
 import { toast } from "react-toastify";
 import { useRedirect } from "../hooks/useRedirect";
+import { parsePhoneNumberFromString } from "libphonenumber-js";
+
 import i18n from "../i18n";
 import CustomSpinner from "../components/CustomSpinner";
 import ShippingSteps from "../components/ShippingSteps";
@@ -46,6 +48,7 @@ export default function Shipping() {
       shippingAddress?.phoneNumber ||
       ""
   );
+  const [reservedCodeNumber, setReservedCodeNumber] = useState("");
   const [phoneNumberCodeError, setPhoneNumberCodeError] = useState("");
 
   const [allCountries, setAllCountries] = useState([]);
@@ -61,7 +64,7 @@ export default function Shipping() {
   const dispatch = useDispatch();
 
   const navigate = useNavigate();
-  console.log(data);
+
   // const excludeFlags = [
   //   "BL",
   //   "BQ",
@@ -134,13 +137,30 @@ export default function Shipping() {
       if (selectedCountry) {
         try {
           setIsLoadingCity(true);
-          const response = await fetch(
-            `http://api.geonames.org/searchJSON?country=${
-              selectedCountry.value
-            }&username=${import.meta.env.VITE_COUNTRY_USERNAME}`
-          );
-          const data = await response.json();
+          let response;
+          console.log(selectedCountry);
+          if (!selectedCountry.value) {
+            const code_response = await fetch(
+              `http://api.geonames.org/searchJSON?q=${selectedCountry}&featureClass=A&featureCode=PCLI&maxRows=1&username=${
+                import.meta.env.VITE_COUNTRY_USERNAME
+              }`
+            );
+            const data2 = await code_response.json();
 
+            response = await fetch(
+              `http://api.geonames.org/searchJSON?country=${
+                data2.geonames[0].countryCode
+              }&username=${import.meta.env.VITE_COUNTRY_USERNAME}`
+            );
+          } else {
+            response = await fetch(
+              `http://api.geonames.org/searchJSON?country=${
+                selectedCountry.value
+              }&username=${import.meta.env.VITE_COUNTRY_USERNAME}`
+            );
+          }
+          const data = await response.json();
+          console.log(data);
           const citiesData = data.geonames.map((city) => {
             if (city.name === selectedCountry.label) return {};
             return {
@@ -167,6 +187,11 @@ export default function Shipping() {
     setCountryError("");
     // Reset city when country changes
     setSelectedCity(null);
+    const phoneNumberInstance = parsePhoneNumberFromString(
+      phoneNumber,
+      selectedOption.value
+    );
+    setReservedCodeNumber(phoneNumberInstance?.countryCallingCode);
   };
   const handleCityChange = (selectedOption) => {
     setSelectedCity(selectedOption);
@@ -206,7 +231,17 @@ export default function Shipping() {
     if (!phoneNumber) {
       setPhoneNumberCodeError("Phone Number is required");
     } else {
-      setPhoneNumberCodeError("");
+      const phoneNumberInstance = parsePhoneNumberFromString(
+        phoneNumber,
+        selectedCountry.value
+      );
+      setReservedCodeNumber(phoneNumberInstance?.countryCallingCode);
+
+      if (!phoneNumberInstance || !phoneNumberInstance.isValid()) {
+        setPhoneNumberCodeError("Invalid Phone Number");
+      } else {
+        setPhoneNumberCodeError("");
+      }
     }
   };
 
@@ -296,27 +331,26 @@ export default function Shipping() {
 
   const handleCityMenuOpen = async () => {
     setIsClearPressed(false);
-    if (selectedCountry && allCities.length === 0) {
+    if (selectedCountry) {
       const fetchCitySuccess = await handleFetchCity();
       if (!fetchCitySuccess && !allCities.length && isClearPressed) {
         toast.error("Please Select a Country again");
       }
-      console.log(allCities);
     }
   };
 
   useEffect(() => {
     if (data?.data?.shippingAddress) {
-      const { address, postalCode, city, country } = data.data.shippingAddress;
+      const { address, postalCode, city, country, phoneNumber } =
+        data.data.shippingAddress;
 
       setAddress(address || "");
       setPostalCode(postalCode || "");
       setSelectedCountry(country || null);
       setSelectedCity(city || null);
+      setPhoneNumber(phoneNumber || "");
     }
   }, [data]);
-  console.log(selectedCity);
-  console.log(selectedCountry);
 
   if (isLoading) return <CustomSpinner />;
   return (
@@ -456,7 +490,8 @@ export default function Shipping() {
                     htmlFor="phoneNumber"
                     className="block text-gray-700 dark:text-white mb-1"
                   >
-                    Phone Number
+                    Phone Number{" "}
+                    {reservedCodeNumber ? `(+${reservedCodeNumber})` : ""}
                   </label>
                   <input
                     type="text"

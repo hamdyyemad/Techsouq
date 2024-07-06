@@ -31,7 +31,10 @@ const corsoptions = {
     "http://localhost:5173",
     "https://techsouq.vercel.app/",
     "https://techsouq-git-main-hamdyyemads-projects.vercel.app/",
-    "https://techsouq-git-main-hamdyyemads-projects.vercel.app/"
+    "https://techsouq-git-main-hamdyyemads-projects.vercel.app/",
+    "http://techsouq.vercel.app/",
+    "http://techsouq-git-main-hamdyyemads-projects.vercel.app/",
+    "http://techsouq-git-main-hamdyyemads-projects.vercel.app/",
   ],
   optionsSuccessStatus: 200,
   credentials: true,

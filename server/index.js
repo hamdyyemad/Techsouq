@@ -39,6 +39,7 @@ const corsoptions = {
   optionsSuccessStatus: 200,
   credentials: true,
   exposedheaders: ["set-cookie"],
+  methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
 };
 app.use(cors(corsoptions));
 const cookieParser = require("cookie-parser");

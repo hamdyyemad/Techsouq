@@ -11,6 +11,8 @@ import Reviews from "../../components/Reviews";
 import ProductsNavbar from "../../components/ProductsNavbar";
 import BackToAllProducts from "../../components/BackToAllProducts";
 import { RatingWithText } from "../../components/RatingWithText";
+import { Slider } from "@material-tailwind/react";
+
 export default function VanDetails() {
   const { t } = useTranslation();
   const { id } = useParams();
@@ -264,7 +266,7 @@ export default function VanDetails() {
       </div>
       {enableCart && userInfo?.token ? (
         <>
-          <hr className="border-gray-300 dark:border-white w-80 m-auto"></hr>
+          <hr className="border-gray-300 dark:border-white w-80 m-auto xs:w-52"></hr>
           <Reviews product={product} />
           {!isUserAlreadyReviewd && (
             <form
@@ -275,26 +277,47 @@ export default function VanDetails() {
               <div className="relative  mb-3">
                 <label
                   className="block uppercase dark:text-gray-200 text-xs font-bold mb-2"
-                  htmlFor="rating"
+                  htmlFor="steps-range"
                 >
                   {t("products.rating")}
                 </label>
-                <input
-                  type="number"
-                  name="rating"
-                  id="rating"
+                <div className="w-52 grid grid-cols-1">
+                  <Slider
+                    id="steps-range"
+                    min={0}
+                    max={5}
+                    defaultValue={rating}
+                    onChange={handleRatingChange}
+                    step={0.5}
+                  />
+                  <input
+                    type="number"
+                    name="rating"
+                    id="rating"
+                    min="0"
+                    max="5"
+                    step="0.5"
+                    readOnly
+                    value={rating}
+                    onChange={handleRatingChange}
+                    required
+                    className="mt-5 border-0 px-3 py-3 rounded text-sm shadow 
+                    bg-gray-300 placeholder-black text-gray-800 outline-none focus:bg-gray-400"
+                  />
+                </div>
+                {/* <input
+                  id="steps-range"
+                  type="range"
                   min="0"
                   max="5"
-                  step="0.1"
                   value={rating}
                   onChange={handleRatingChange}
                   required
-                  className="border-0 px-3 py-3 rounded text-sm shadow 
-                    bg-gray-300 placeholder-black text-gray-800 outline-none focus:bg-gray-400"
-                  placeholder="Write a number between 0 - 5"
-                />
+                  step="0.5"
+                  className="w-52 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"
+                /> */}
               </div>
-              <div className="relative  mb-3">
+              <div className="relative  mb-3 ">
                 <label
                   className="block uppercase dark:text-gray-200 text-xs font-bold mb-2"
                   htmlFor="message"
@@ -306,7 +329,7 @@ export default function VanDetails() {
                   id="feedback"
                   rows="4"
                   cols="80"
-                  className="border-0 px-3 py-3 bg-gray-300 placeholder-black text-gray-800 rounded text-sm shadow focus:outline-none "
+                  className="border-0 px-3 py-3 bg-gray-300 placeholder-black text-gray-800 rounded text-sm shadow focus:outline-none xs:w-60"
                   placeholder=""
                   required
                 ></textarea>

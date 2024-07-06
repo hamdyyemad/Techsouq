@@ -137,8 +137,8 @@ export default function Order() {
     <ErrorComponent error={error} />
   ) : (
     <>
-      <div className="bg-gray-100 dark:bg-[#1C1E2D] min-w-full min-h-full">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 p-5">
+      <div className="bg-gray-100 dark:bg-[#1C1E2D] min-w-full min-h-full xs:grid">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 p-5 xs:p-0 xs:text-xl xs:px-3 px-9">
           {t("order_history.order_ID")}: {id}
         </h1>
 

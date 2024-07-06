@@ -25,7 +25,7 @@ export default function Summary({
           <div className="flex flex-col justify-start items-start min-w-max space-y-4 md:space-y-6 xl:space-y-8 col-span-4 xs:h-52 xs:w-full">
             <div
               className={`bg-white dark:bg-[#1C1E2D] ${
-                currentUser?.role === "ADMIN" ? "px-2 py-8" : "py-8 px-20"
+                currentUser?.role === "ADMIN" ? "px-2 py-8" : "p-8"
               } rounded-lg shadow-md border dark:border-[#242635] flex flex-col m-auto z-0 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 dark:scrollbar-thumb-blue-500 dark:scrollbar-track-gray-700`}
             >
               <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">

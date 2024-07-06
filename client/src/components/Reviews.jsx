@@ -6,7 +6,7 @@ export default function Reviews({ product, showText = true }) {
   const reviews = product?.reviews;
   const { t } = useTranslation();
   return (
-    <div className="  max-w-2xl sm:px-6 lg:grid lg:max-w-7xl  lg:gap-x-8 lg:px-8">
+    <div className="max-w-2xl sm:px-6 lg:grid lg:max-w-7xl  lg:gap-x-8 lg:px-8 xs:mt-5 ">
       {showText && (
         <Typography
           variant="h3"

@@ -69,6 +69,7 @@ export default function Layout() {
       <>
         <Header isDarkMode={isDarkMode} setIsDarkMode={setIsDarkMode} />
         <ToastContainer />
+
         <div className="bg-primary w-full grid grid-cols-[15rem,1fr] dark:bg-[#1C1E2D] overflow-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 dark:scrollbar-thumb-blue-500 dark:scrollbar-track-gray-700">
           {!isMobile && <Sidebar />}
           <main

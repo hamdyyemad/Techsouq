@@ -48,8 +48,8 @@ const Favorites = () => {
       <h1 className="mb-10 text-center text-2xl font-bold dark:text-white">
         {t("cart.items")}
       </h1>
-      <div className="mx-auto max-w-5xl px-6">
-        <div className="lg:col-span-3 grid grid-cols-3 p-1">
+      <div className="mx-auto max-w-5xl px-6 xs:p-0">
+        <div className="lg:col-span-3 grid grid-cols-3 p-1 xs:grid-cols-1">
           {favorites?.map((item) => (
             <div key={item._id} className="mb-6">
               <EcommerceCard product={item} id={item._id} />

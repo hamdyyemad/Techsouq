@@ -39,6 +39,7 @@ export const validatePhoneNumber = (phoneNumber, selectedCountry) => {
       phoneNumber,
       selectedCountry.value
     );
+    if (!selectedCountry?.value) return "";
     const check =
       phoneNumberInstance &&
       phoneNumber.length >= phoneNumberInstance?.countryCallingCode.length

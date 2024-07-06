@@ -87,7 +87,12 @@ export default function Shipping() {
     fetchCities,
     handleCityChange,
     handleCityMenuOpen,
-  } = useFetchCities(selectedCountry, setSelectedCity, setIsClearPressed, isClearPressed);
+  } = useFetchCities(
+    selectedCountry,
+    setSelectedCity,
+    setIsClearPressed,
+    isClearPressed
+  );
 
   const dispatch = useDispatch();
 
@@ -261,7 +266,7 @@ export default function Shipping() {
                         i18n.dir() === "rtl" ? "left-0" : "right-0"
                       } px-2 py-1 font-medium text-blue-600 dark:text-blue-500 hover:underline`}
                     >
-                      Clear
+                      {t("filter.clear")}
                     </button>
                   </div>
                 ) : (
@@ -314,7 +319,7 @@ export default function Shipping() {
                           i18n.dir() === "rtl" ? "left-0" : "right-0"
                         } px-2 py-1 font-medium text-blue-600 dark:text-blue-500 hover:underline`}
                       >
-                        Clear
+                        {t("filter.clear")}
                       </button>
                     </div>
                   ) : (
@@ -347,7 +352,7 @@ export default function Shipping() {
                     htmlFor="phoneNumber"
                     className="block text-gray-700 dark:text-white mb-1"
                   >
-                    Phone Number{" "}
+                    {t("order.phone_number")}{" "}
                     {reservedCodeNumber ? `(+${reservedCodeNumber})` : ""}
                   </label>
                   <input

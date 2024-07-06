@@ -1,11 +1,13 @@
+import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 
 export default function ShippingSteps({ currentStep }) {
+  const { t } = useTranslation();
   const steps = [
-    { step: 1, label: "Cart", link: "/cart" },
-    { step: 2, label: "Shipping", link: "/shipping" },
-    { step: 3, label: "Payments", link: "/payment" },
-    { step: 4, label: "Place Order", link: "/place-order" },
+    { step: 1, label: t("homepage.cart"), link: "/cart" },
+    { step: 2, label: t("homepage.shipping"), link: "/shipping" },
+    { step: 3, label: t("homepage.payment"), link: "/payment" },
+    { step: 4, label: t("homepage.placeOrder"), link: "/placeorder" },
   ];
 
   const getStepClasses = (step) => {
@@ -40,7 +42,7 @@ export default function ShippingSteps({ currentStep }) {
             )}`}
           >
             <span className={getSpanClasses(step)}>{step}</span>
-            <p className="xs:ml-2">{label}</p>
+            <p className="mx-3">{label}</p>
           </Link>
         ))}
       </div>
@@ -54,7 +56,7 @@ export default function ShippingSteps({ currentStep }) {
             disabled
           >
             <span className={getSpanClasses(step)}>{step}</span>
-            <p className="xs:ml-2 xs:whitespace-nowrap">{label}</p>
+            <p className="mx-3 xs:whitespace-nowrap">{label}</p>
           </button>
         ))}
       </div>

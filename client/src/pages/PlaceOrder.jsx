@@ -1,20 +1,23 @@
 import { useEffect } from "react";
-import { Link } from "react-router-dom";
+// import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { useCreateOrderMutation } from "../slices/orderApiSlice";
 import { clearCartItems } from "../slices/cartSlice";
 import { toast } from "react-toastify";
 import { useRedirect } from "../hooks/useRedirect";
-import { useScreenWidth } from "../hooks/useScreenWidth";
+// import { useScreenWidth } from "../hooks/useScreenWidth";
 
 import Summary from "../components/placeorder/Summary";
+import ShippingSteps from "../components/ShippingSteps";
+import { useTranslation } from "react-i18next";
 export default function PlaceOrder() {
   useRedirect();
+  const { t } = useTranslation();
   const cart = useSelector((store) => store.cart.cardItems);
   const subs = useSelector((store) => store.cart);
   const user = useSelector((store) => store.auth.userInfo);
-  const isMobile = useScreenWidth();
+  // const isMobile = useScreenWidth();
   let token = user.token;
   // { isLoading, error }
   const [createOrder, { isLoading, error }] = useCreateOrderMutation();
@@ -35,8 +38,12 @@ export default function PlaceOrder() {
     const shipAdd = {
       address,
       postalCode,
-      city: selectedCity?.label,
-      country: selectedCountry?.label,
+      city:
+        typeof selectedCity === "string" ? selectedCity : selectedCity?.label,
+      country:
+        typeof selectedCountry === "string"
+          ? selectedCountry
+          : selectedCountry?.label,
       phoneNumber,
     };
 
@@ -78,12 +85,13 @@ export default function PlaceOrder() {
   };
 
   return (
-    <div className="bg-gray-100 dark:bg-[#1C1E2D] min-w-full min-h-full">
+    <div className="bg-gray-100 dark:bg-[#1C1E2D] min-w-full min-h-full xs:flex xs:flex-col xs:w-full">
       <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 p-5">
-        Place Order
+        {t("homepage.placeOrder")}
       </h1>
-
-      {!isMobile && <ShippingSteps />}
+      <div className="xs:mx-5 xs:min-w-full xs:px-5">
+        <ShippingSteps currentStep={4} />
+      </div>
       <Summary
         cart={cart}
         subs={subs}
@@ -91,49 +99,6 @@ export default function PlaceOrder() {
         placeOrderHandler={placeOrderHandler}
         isLoading={isLoading}
       />
-    </div>
-  );
-}
-function ShippingSteps() {
-  return (
-    <div className="flex items-center justify-center mb-3">
-      <Link
-        to="/cart"
-        className="flex text-sm text-blue-500 focus:outline-none"
-      >
-        <span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">
-          1
-        </span>{" "}
-        Cart
-      </Link>
-      <Link
-        // to="/shipping"
-        className="flex text-sm text-blue-500 ml-8 focus:outline-none"
-      >
-        <span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">
-          2
-        </span>{" "}
-        Shipping
-      </Link>
-      <Link
-        to="/payment"
-        className="flex text-sm text-blue-500 ml-8 focus:outline-none"
-      >
-        <span className="flex items-center justify-center text-white bg-blue-500 rounded-full h-5 w-5 mr-2">
-          3
-        </span>{" "}
-        Payments
-      </Link>
-
-      <button
-        className="flex text-sm text-gray-700 ml-8 focus:outline-none"
-        disabled
-      >
-        <span className="flex items-center justify-center border-2 border-blue-500 rounded-full h-5 w-5 mr-2">
-          4
-        </span>{" "}
-        Place Order
-      </button>
     </div>
   );
 }

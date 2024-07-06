@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import CustomSpinner from "../../CustomSpinner";
 import Cart from "../../orders/Cart";
 import Shipping from "../../placeorder/Shipping";
@@ -15,19 +16,20 @@ export default function Summary({
   deliverHandler,
   // onApproveTest,
 }) {
+  const { t } = useTranslation();
   const isRtl = i18n.dir() === "rtl";
   return (
-    <div className="bg-gray-100 min-w-full max-h-90 overflow-auto dark:bg-[#1C1E2D] ">
-      <div className=" min-w-full justify-center px-6 md:flex md:space-x-6 xl:px-0">
-        <div className="grid grid-cols-5 md:grid-cols-5  w-full h-min ">
-          <div className="flex flex-col justify-start items-start min-w-max space-y-4 md:space-y-6 xl:space-y-8 col-span-4">
+    <div className="bg-gray-100 min-w-full overflow-auto dark:bg-[#1C1E2D]">
+      <div className=" min-w-full justify-center px-6 md:flex md:space-x-6 xl:px-0 xs:p-0">
+        <div className="grid grid-cols-5 md:grid-cols-5  w-full h-min xs:grid-cols-1 xs:m-auto">
+          <div className="flex flex-col justify-start items-start min-w-max space-y-4 md:space-y-6 xl:space-y-8 col-span-4 xs:h-52 xs:w-full">
             <div
               className={`bg-white dark:bg-[#1C1E2D] ${
                 currentUser?.role === "ADMIN" ? "px-2 py-8" : "py-8 px-20"
               } rounded-lg shadow-md border dark:border-[#242635] flex flex-col m-auto z-0 h-screen overflow-y-auto scrollbar-thin scrollbar-thumb-blue-700 scrollbar-track-blue-300 dark:scrollbar-thumb-blue-500 dark:scrollbar-track-gray-700`}
             >
               <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">
-                Customer’s Cart
+                {t("homepage.customer_cart")}
               </p>
 
               <Cart cart={cart} />
@@ -68,7 +70,7 @@ export default function Summary({
                   className="font-regular relative block w-full rounded-lg bg-green-500 p-2 text-base leading-5 text-white opacity-100 border-b border-gray-200"
                   onClick={deliverHandler}
                 >
-                  Mark As Delivered
+                  {t("order.mark_as_delivered")}
                 </button>
               )}
           </div>

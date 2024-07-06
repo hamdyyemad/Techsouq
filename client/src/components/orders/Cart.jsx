@@ -1,3 +1,4 @@
+import { BASE_URL } from "../../constants";
 export default function Cart({ cart }) {
   const mappedElements = cart.map((c) => (
     <div key={c._id}>
@@ -6,9 +7,7 @@ export default function Cart({ cart }) {
           <img
             className="w-full hidden md:block"
             src={
-              c.image.includes("/uploads")
-                ? `http://localhost:3001${c.image}`
-                : c.image
+              c.image.includes("/uploads") ? `${BASE_URL}${c.image}` : c.image
             }
             alt={c.name}
           />

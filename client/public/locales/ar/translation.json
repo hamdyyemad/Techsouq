@@ -124,7 +124,12 @@
     "postal_code": "الرمز البريدي",
     "payment": "الدفع",
     "check_out_with_payPal": "الدفع بـ Paypal",
-    "phone_number": "رقم الهاتف"
+    "phone_number": "رقم الهاتف",
+    "mark_as_delivered": "ضع علامة تم التوصيل",
+    "not_delivered": "لم يتم توصيله",
+    "not_paid": "لم يتم الدفع",
+    "delivered_on": "تم توصيله في",
+    "paid_on": "تم الدفع في"
   },
   "categories": {
     "categories": "الفئات",

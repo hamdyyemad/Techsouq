@@ -124,7 +124,12 @@
     "postal_code": "Postal Code",
     "payment": "Payment",
     "check_out_with_payPal": "Check out with PayPal",
-    "phone_number": "Phone Number"
+    "phone_number": "Phone Number",
+    "mark_as_delivered": "Mark As Delivered",
+    "not_delivered": "Not Delivered",
+    "not_paid": "Not Paid",
+    "delivered_on": "Delivered on",
+    "paid_on": "Paid on"
   },
   "categories": {
     "categories": "Categories",

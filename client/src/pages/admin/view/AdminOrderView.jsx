@@ -1,15 +1,15 @@
+import axios from "axios";
 import { Link, useParams, useLocation } from "react-router-dom";
-// import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useGetOrderDetailsQuery } from "../../../slices/orderApiSlice";
-// import { resetCart, clearCartItems } from "../slices/cartSlice";
-// import { useDispatch } from "react-redux";
+import { BASE_URL } from "../../../constants";
+import { useTranslation } from "react-i18next";
 import CustomSpinner from "../../../components/CustomSpinner";
 import ErrorComponent from "../../../components/ErrorComponent";
-import axios from "axios";
 import Summary from "../../../components/admin/orders/Summary";
 
 export default function AdminOrderView() {
+  const { t } = useTranslation();
   let cart = [];
   let subs = [];
   let user = {};
@@ -59,13 +59,9 @@ export default function AdminOrderView() {
       authorization: `Bearer ${currentUser.token}`,
     };
     try {
-      const res = await axios.put(
-        `http://localhost:3001/orders/${id}/deliver`,
-        null,
-        {
-          headers: headers,
-        }
-      );
+      const res = await axios.put(`${BASE_URL}/orders/${id}/deliver`, null, {
+        headers: headers,
+      });
       console.log(res);
     } catch (err) {
       console.log(err);
@@ -79,9 +75,9 @@ export default function AdminOrderView() {
     <ErrorComponent />
   ) : (
     <>
-      <div className="bg-gray-100 dark:bg-[#1C1E2D] min-w-full min-h-full">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 p-5">
-          Order: {id}
+      <div className="bg-gray-100 dark:bg-[#1C1E2D] min-w-full min-h-full xs:grid ">
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white mb-4 p-5 xs:p-0 xs:text-xl xs:px-3 px-9">
+          {t("order_history.order_ID")}: {id}
         </h1>
         {currentUser.role !== "ADMIN" && <ShippingSteps />}
         <Summary

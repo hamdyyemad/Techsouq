@@ -29,6 +29,9 @@ const corsoptions = {
     "http://127.0.0.1",
     "http://104.142.122.231",
     "http://localhost:5173",
+    "https://techsouq.vercel.app/",
+    "https://techsouq-git-main-hamdyyemads-projects.vercel.app/",
+    "https://techsouq-git-main-hamdyyemads-projects.vercel.app/"
   ],
   optionsSuccessStatus: 200,
   credentials: true,

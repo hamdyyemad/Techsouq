@@ -17,25 +17,28 @@ const fetch = require("node-fetch");
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const corsoptions = {
-  //to allow requests from client
-  origin: true, // Allow all origins
+const corsOptions = {
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   optionsSuccessStatus: 200,
   credentials: true,
-  exposedheaders: ["set-cookie", "Set-cookie"],
+  exposedHeaders: ["set-cookie", "Set-cookie"],
   methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
 };
+
+app.use(cors(corsOptions));
 
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 app.use(cors(corsoptions));
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  next();
-});
 require("dotenv").config();
 const url = process.env.MONGO_URL;
 mongoose.connect(url).then(() => {

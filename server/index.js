@@ -44,12 +44,12 @@ app.use(cors(corsoptions));
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 require("dotenv").config();
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  next();
-});
+// app.use((req, res, next) => {
+//   res.setHeader("Access-Control-Allow-Methods", "*");
+//   res.setHeader("Access-Control-Allow-Headers", "*");
+//   res.setHeader("Access-Control-Allow-Credentials", "true");
+//   next();
+// });
 const url = process.env.MONGO_URL;
 mongoose.connect(url).then(() => {
   console.log("Db connect success");

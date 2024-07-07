@@ -16,7 +16,7 @@ const path = require("path");
 const fetch = require("node-fetch");
 const session = require("express-session");
 app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_BASE_URL);
+  res.setHeader("Access-Control-Allow-Origin", "*");
   res.setHeader("Access-Control-Allow-Methods", "*");
   res.setHeader("Access-Control-Allow-Headers", "*");
   res.setHeader("Access-Control-Allow-Credentials", "true");
@@ -44,7 +44,7 @@ const corsoptions = {
   ],
   optionsSuccessStatus: 200,
   credentials: true,
-  exposedheaders: ["set-cookie"],
+  exposedheaders: ["set-cookie", "Set-cookie"],
   methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
 };
 app.use(cors(corsoptions));

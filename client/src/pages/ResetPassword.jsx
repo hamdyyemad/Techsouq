@@ -1,5 +1,5 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";

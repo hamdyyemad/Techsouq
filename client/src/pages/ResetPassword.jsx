@@ -1,6 +1,6 @@
 import { Button, Card, Typography } from "@material-tailwind/react";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useTranslation } from "react-i18next";
 

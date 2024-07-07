@@ -29,6 +29,13 @@ const corsoptions = {
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 app.use(cors(corsoptions));
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
 require("dotenv").config();
 const url = process.env.MONGO_URL;
 mongoose.connect(url).then(() => {

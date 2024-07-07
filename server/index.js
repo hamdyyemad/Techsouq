@@ -15,7 +15,13 @@ const app = express();
 const path = require("path");
 const fetch = require("node-fetch");
 const session = require("express-session");
-
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", process.env.FRONTEND_BASE_URL);
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 

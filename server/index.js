@@ -14,55 +14,27 @@ const paypalService = require("./utils/paypalService");
 const app = express();
 const path = require("path");
 const fetch = require("node-fetch");
-const session = require("express-session");
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader("Access-Control-Allow-Headers", "*");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  next();
-});
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
 const corsoptions = {
   //to allow requests from client
-  origin: [
-    "http://192.168.1.10:5173",
-    "192.168.1.6",
-    "http://192.168.1.10",
-    "http://localhost:3001",
-    "http://127.0.0.1",
-    "http://104.142.122.231",
-    "http://localhost:5173",
-    "https://techsouq.vercel.app",
-    "https://techsouq-git-main-hamdyyemads-projects.vercel.app",
-    "https://techsouq-git-main-hamdyyemads-projects.vercel.app",
-    "http://techsouq.vercel.app",
-    "http://techsouq-git-main-hamdyyemads-projects.vercel.app",
-    "http://techsouq-git-main-hamdyyemads-projects.vercel.app",
-  ],
+  origin: true, // Allow all origins
   optionsSuccessStatus: 200,
   credentials: true,
   exposedheaders: ["set-cookie", "Set-cookie"],
   methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
 };
-app.use(cors(corsoptions));
+
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
+app.use(cors(corsoptions));
 require("dotenv").config();
 const url = process.env.MONGO_URL;
 mongoose.connect(url).then(() => {
   console.log("Db connect success");
 });
 
-app.use(
-  session({
-    secret: "shopifyTM",
-    resave: true,
-    saveUninitialized: true,
-  })
-);
 app.use("/", userRoute);
 app.use("/", productRoute);
 app.use("/", orderRoute);

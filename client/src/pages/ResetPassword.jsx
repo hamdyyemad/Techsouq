@@ -50,6 +50,7 @@ export default function ResetPassword() {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({ password }),
+          credentials: "include",
         }
       );
       setIsLoading(false);

@@ -27,6 +27,7 @@ export default function ForgetPassword() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ email }),
+        credentials: "include",
       });
       setIsLoading(false);
       if (response.ok) {

@@ -239,13 +239,11 @@ const getResetPasswordLinkCtrl = async (req, res) => {
     res.cookie("resetUserId", String(user._id), {
       secure: true,
       sameSite: false,
-      domain: "techsouq.vercel.app",
       httpOnly: true,
     });
     res.cookie("resetToken", req.params.token, {
       secure: true,
       sameSite: false,
-      domain: "techsouq.vercel.app",
       httpOnly: true,
     });
     console.log(req.params);

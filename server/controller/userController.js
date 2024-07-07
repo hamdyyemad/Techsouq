@@ -169,7 +169,7 @@ const verifyUserAccountCtrl = async (req, res) => {
     user.isAccountVerified = true;
     await user.save();
     verificationToken = {};
-    return res.redirect("https://techsouq.vercel.app/login");
+    return res.redirect(`${process.env.FRONTEND_BASE_URL}/login`);
   } catch (err) {
     return res
       .status(404)
@@ -241,7 +241,7 @@ const getResetPasswordLinkCtrl = async (req, res) => {
     console.log(req.params);
 
     // Redirect to the generic reset password route
-    res.redirect("https://techsouq.vercel.app/reset-password");
+    res.redirect(`${process.env.FRONTEND_BASE_URL}/reset-password`);
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

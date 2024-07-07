@@ -236,8 +236,14 @@ const getResetPasswordLinkCtrl = async (req, res) => {
     }
 
     // Set userId and token as cookies
-    res.cookie("resetUserId", String(user._id), { sameSite: "None" });
-    res.cookie("resetToken", req.params.token, { sameSite: "None" });
+    res.cookie("resetUserId", String(user._id), {
+      sameSite: "none",
+      domain: process.env.FRONTEND_BASE_URL,
+    });
+    res.cookie("resetToken", req.params.token, {
+      sameSite: "none",
+      domain: process.env.FRONTEND_BASE_URL,
+    });
     console.log(req.params);
 
     // Redirect to the generic reset password route

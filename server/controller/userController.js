@@ -68,7 +68,7 @@ const register = async (req, res) => {
     });
     newuser.token = token;
     await newuser.save();
-    const link = `http://localhost:3001/users/${newuser._id}/verify/${newuser.token}`;
+    const link = `${process.env.BASE_URL}/users/${newuser._id}/verify/${newuser.token}`;
 
     const htmlTemplate = `
     <div>
@@ -207,7 +207,7 @@ const sendResetPasswordLinkCtrl = async (req, res) => {
       user.token = token;
     }
     //4.create link
-    const link = `http://localhost:3001/users/reset-password/${user._id}/${user.token}`;
+    const link = `${process.env.BASE_URL}/users/reset-password/${user._id}/${user.token}`;
 
     //5.creating html template
     const htmlTemplate = `<a href = "${link}">click here the to reset your password</a>`;
@@ -244,7 +244,7 @@ const getResetPasswordLinkCtrl = async (req, res) => {
     console.log(req.params);
 
     // Redirect to the generic reset password route
-    res.redirect("http://localhost:5173/reset-password");
+    res.redirect("http://techsouq.vercel.app/reset-password");
   } catch (error) {
     res.status(400).json({ message: error.message });
   }

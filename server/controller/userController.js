@@ -238,12 +238,12 @@ const getResetPasswordLinkCtrl = async (req, res) => {
     // Set userId and token as cookies
     res.cookie("resetUserId", String(user._id), {
       secure: true,
-      sameSite: false,
+      sameSite: 'none',
       httpOnly: true,
     });
     res.cookie("resetToken", req.params.token, {
       secure: true,
-      sameSite: false,
+      sameSite: 'none',
       httpOnly: true,
     });
     console.log(req.params);

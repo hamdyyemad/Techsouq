@@ -13,33 +13,44 @@ const httpStatusText = require("./utils/httpStatusText");
 const paypalService = require("./utils/paypalService");
 const app = express();
 const path = require("path");
-const fetch = require("node-fetch");
+
 app.use(express.json());
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
 
-const corsOptions = {
-  origin: function (origin, callback) {
-    // Allow requests with no origin (like mobile apps or curl requests)
-    if (!origin) return callback(null, true);
-
-    if (allowedOrigins.includes(origin)) {
-      callback(null, true);
-    } else {
-      callback(new Error("Not allowed by CORS"));
-    }
-  },
+const corsoptions = {
+  //to allow requests from client
+  origin: [
+    "http://192.168.1.10:5173",
+    "192.168.1.6",
+    "http://192.168.1.10",
+    "http://localhost:3001",
+    "http://127.0.0.1",
+    "http://104.142.122.231",
+    "http://localhost:5173",
+    "https://techsouq.vercel.app",
+    "https://techsouq-git-main-hamdyyemads-projects.vercel.app",
+    "https://techsouq-git-main-hamdyyemads-projects.vercel.app",
+    "http://techsouq.vercel.app",
+    "http://techsouq-git-main-hamdyyemads-projects.vercel.app",
+    "http://techsouq-git-main-hamdyyemads-projects.vercel.app",
+  ],
   optionsSuccessStatus: 200,
   credentials: true,
-  exposedHeaders: ["set-cookie", "Set-cookie"],
+  exposedheaders: ["set-cookie", "Set-cookie"],
   methods: ["GET", "PUT", "POST", "DELETE", "OPTIONS"],
 };
-
-app.use(cors(corsOptions));
+app.use(cors(corsoptions));
 
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
-app.use(cors(corsoptions));
 require("dotenv").config();
+app.use((req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader("Access-Control-Allow-Headers", "*");
+  res.setHeader("Access-Control-Allow-Credentials", "true");
+  next();
+});
 const url = process.env.MONGO_URL;
 mongoose.connect(url).then(() => {
   console.log("Db connect success");

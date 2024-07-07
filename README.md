@@ -1,5 +1,6 @@
 # Techsouq
 Multilingual E-commerce Website (MERN STACK)
+<a> https://techsouq.vercel.app </a>
 
 ![screenshot](screenshot.png)
 
@@ -55,6 +56,8 @@ PAYPAL_CLIENT_ID=***********
 PAYPAL_CLIENT_SECRET=***********
 APP_EMAIL_ADDRESS=***********
 APP_EMAIL_PASSWORD=***********
+BASE_URL=https://backend.railway.app
+FRONTEND_BASE_URL=https://frontend.vercel.app
 ```
   - "NODE_ENV" is NODE environment production/development
   - "MONGO_URL" is the Mongo cluster
@@ -64,6 +67,8 @@ APP_EMAIL_PASSWORD=***********
   - "PAYPAL_CLIENT_SECRET" is the secret key of the paypal
   - "APP_EMAIL_ADDRESS" is the email registered in "nodemailer", so you can reset password
   - "APP_EMAIL_PASSWORD" is the password of the email registered in "nodemailer"
+  - "BASE_URL" is the deployed backend URL on Railway
+  - "FRONTEND_BASE_URL" is the deployed frontend URL on Vercel
 
 2) Install Dependencies (client & server)
     - Clone the repository:

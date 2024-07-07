@@ -80,7 +80,7 @@ const router = createBrowserRouter(
         loader={async () => null}
       />
       <Route
-        path="reset-password"
+        path="reset-password/:userId/:token"
         element={<ResetPassword />}
         loader={async () => null}
       />

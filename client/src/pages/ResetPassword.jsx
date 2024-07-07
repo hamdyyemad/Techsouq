@@ -10,26 +10,27 @@ import CustomSpinner from "../components/CustomSpinner";
 export default function ResetPassword() {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [userId, setUserId] = useState("");
-  const [token, setToken] = useState("");
+  // const [userId, setUserId] = useState("");
+  // const [token, setToken] = useState("");
+  const { userId, token } = useParams(); // Use useParams to get userId and token from URL
   const { t } = useTranslation();
   const navigate = useNavigate();
-  useEffect(() => {
-    // Retrieve data from cookies
-    const userId = document.cookie.replace(
-      /(?:(?:^|.*;\s*)resetUserId\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
-    const token = document.cookie.replace(
-      /(?:(?:^|.*;\s*)resetToken\s*=\s*([^;]*).*$)|^.*$/,
-      "$1"
-    );
+  // useEffect(() => {
+  //   // Retrieve data from cookies
+  //   const userId = document.cookie.replace(
+  //     /(?:(?:^|.*;\s*)resetUserId\s*=\s*([^;]*).*$)|^.*$/,
+  //     "$1"
+  //   );
+  //   const token = document.cookie.replace(
+  //     /(?:(?:^|.*;\s*)resetToken\s*=\s*([^;]*).*$)|^.*$/,
+  //     "$1"
+  //   );
 
-    // Use userId and token as needed for your reset password logic
-    console.log(document.cookie);
-    setUserId(userId);
-    setToken(token);
-  }, []);
+  //   // Use userId and token as needed for your reset password logic
+  //   console.log(document.cookie);
+  //   setUserId(userId);
+  //   setToken(token);
+  // }, []);
   console.log("token is" + token);
   console.log("userId is" + userId);
   const handleResetPassword = async (e) => {

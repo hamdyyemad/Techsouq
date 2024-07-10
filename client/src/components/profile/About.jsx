@@ -68,7 +68,7 @@ export default function About({
     // Reset the edit mode after saving
     setIsEdit(false);
   };
-  console.log(shippingAddress);
+
   return (
     <div className="bg-white p-3 pb-0 shadow-sm rounded-sm  dark:bg-[#1C1E2D] xs:p-auto ">
       {isEdit ? (

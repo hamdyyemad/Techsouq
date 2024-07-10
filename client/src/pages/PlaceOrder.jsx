@@ -31,7 +31,7 @@ export default function PlaceOrder() {
       navigate("/payment");
     }
   }, [subs.paymentMethod, subs.shippingAddress.address, navigate]);
-  console.log(subs);
+
   const placeOrderHandler = async () => {
     const { address, postalCode, selectedCity, selectedCountry, phoneNumber } =
       subs.shippingAddress;
@@ -62,7 +62,7 @@ export default function PlaceOrder() {
         token
       ).unwrap();
       dispatch(clearCartItems());
-      // console.log(res.data.createdOrder._id);
+      //
 
       navigate(`/order/${res.data.createdOrder._id}`);
     } catch (err) {

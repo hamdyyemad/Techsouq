@@ -47,7 +47,7 @@ export default function Layout() {
             },
           }
         );
-        console.log(response);
+
         if (response.status === 200) {
           // User exists, do nothing
         } else {

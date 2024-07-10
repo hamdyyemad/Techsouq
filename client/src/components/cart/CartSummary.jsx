@@ -47,7 +47,7 @@ export default function CartSummary({ c: product, ind, setCurrent }) {
     product = { ...product, qt };
     dispatch(removeFromCart({ product, qty: qt, id }));
   };
-  console.log(product);
+
   return (
     <div>
       <div className="justify-between mb-6 rounded-lg bg-white p-6 shadow-md sm:flex sm:justify-start dark:bg-[#151725]">

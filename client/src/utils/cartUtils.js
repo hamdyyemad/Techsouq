@@ -10,7 +10,7 @@ export const updateCart = (state, item, qty) => {
     state.cardItems[index] = { ...item, qty };
     // state.qty = qty;
     // item["qty"] = state.qty;
-    // console.log(item);
+    //
     // calc item price
     price = addDecimals(
       state.cardItems.reduce((acc, item) => {

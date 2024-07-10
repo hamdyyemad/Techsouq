@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 
 export default function Customer({ user, subs }) {
   const { t } = useTranslation();
-  console.log(subs);
+
   return (
     <>
       <h3 className="text-xl dark:text-white  font-semibold  text-gray-800">

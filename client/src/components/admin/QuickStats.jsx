@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 export default function QuickStats({ data, data2, data3, data4 }) {
   const { t } = useTranslation();
-  console.log(data3);
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 dark:text-white">
       {data2 && (

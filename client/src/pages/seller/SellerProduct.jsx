@@ -39,7 +39,6 @@ export default function SellerProduct() {
     : [];
 
   const product = [...pendingProduct, ...acceptedProduct];
-  console.log(product);
 
   const createProductHandler = async () => {
     navigate("/seller/productpost");

@@ -5,7 +5,7 @@ import i18n from "../../i18n";
 export default function SellerDropDown({ user, handleLogout }) {
   const { t } = useTranslation();
   const isRTL = i18n.dir() === "rtl";
-  console.log(isRTL);
+
   const btnRef = useRef();
   const [showAdmin, setShowAdmin] = useState(false);
   useEffect(() => {

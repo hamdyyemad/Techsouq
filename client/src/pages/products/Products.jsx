@@ -19,8 +19,7 @@ export default function Products() {
     // Update the URL with the new page number
     const sortQuery = new URLSearchParams(window.location.search).get("sort");
     const queryString = createQueryString(selectedFilters);
-    console.log(queryString);
-    console.log(queryString);
+
     const newQueryString = keyword
       ? `/products/search/${keyword}/page/${newPage}${
           sortQuery ? `?sort=${sortQuery}` : "?"

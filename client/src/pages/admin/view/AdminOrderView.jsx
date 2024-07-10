@@ -28,7 +28,6 @@ export default function AdminOrderView() {
 
   const order = data?.data?.order || location?.state?.order;
 
-  console.log(data);
   if (currentUser.role === "ADMIN") {
     const {
       orderItems,
@@ -53,7 +52,6 @@ export default function AdminOrderView() {
   }
 
   const deliverHandler = async () => {
-    console.log(currentUser.token);
     const headers = {
       Authorization: `Bearer ${currentUser.token}`,
       authorization: `Bearer ${currentUser.token}`,
@@ -62,7 +60,6 @@ export default function AdminOrderView() {
       const res = await axios.put(`${BASE_URL}/orders/${id}/deliver`, null, {
         headers: headers,
       });
-      console.log(res);
     } catch (err) {
       console.log(err);
     }

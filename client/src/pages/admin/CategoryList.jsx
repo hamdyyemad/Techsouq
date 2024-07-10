@@ -12,7 +12,6 @@ export default function CategoryList() {
   const { t } = useTranslation();
   const { data, isLoading, error, refetch } = useGetCategoryQuery();
   const category = data?.data?.listOfCategories;
-  console.log(data);
 
   const user = useSelector((store) => store.auth.userInfo);
   const token = user.token;
@@ -32,7 +31,6 @@ export default function CategoryList() {
         );
 
         refetch();
-        console.log(response);
       } catch (err) {
         console.log(err);
         toast.error(err?.response?.data?.message || err.message);

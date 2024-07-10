@@ -61,7 +61,6 @@ export default function BrandEdit() {
         }
       );
 
-      console.log(res);
       toast.success("Brand updated");
       refetch();
       navigate("/admin/brandlist");

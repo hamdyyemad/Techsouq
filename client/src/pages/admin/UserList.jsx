@@ -32,8 +32,6 @@ export default function UserList() {
         // Send the DELETE request
         const res = await axios.delete(url, { headers });
 
-        console.log(res);
-
         // Refetch the products after deletion
         refetch();
       } catch (err) {

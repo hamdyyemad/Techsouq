@@ -91,7 +91,6 @@ export default function Filter({
     const sortQuery = new URLSearchParams(window.location.search).get("sort");
     const updatedFilters = { ...selectedFilters, [filterId]: [value] };
 
-    console.log(updatedFilters);
     setSelectedFilters(updatedFilters);
     // Update the URL with the selected filters
     const baseUrl = `/products/page/${pageNumber}`;
@@ -99,7 +98,7 @@ export default function Filter({
     const updatedUrl = `${baseUrl}${sortQuery ? `?sort=${sortQuery}` : "?"}${
       queryString ? (sortQuery ? `&${queryString}` : queryString) : ""
     }`;
-    console.log(updatedUrl);
+
     navigate(updatedUrl);
   };
 
@@ -133,7 +132,6 @@ export default function Filter({
       queryString ? (sortQuery ? `&${queryString}` : queryString) : ""
     }`;
 
-    console.log(updatedUrl);
     navigate(updatedUrl);
   };
 

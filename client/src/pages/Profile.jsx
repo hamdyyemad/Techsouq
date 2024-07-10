@@ -17,7 +17,7 @@ export default function Profile() {
     useProfileMutation();
   const { data: orders, isLoading, error } = useGetMyOrdersQuery();
   const order = orders?.data?.orders;
-  // console.log(userInfo?.role !== "USER");
+  //
   // const orders = data.data.orders;
 
   function isObjEmpty(obj) {
@@ -26,7 +26,6 @@ export default function Profile() {
 
   if (!isObjEmpty(shippingAddress)) {
     // Use the existing shippingAddress from the cart
-    console.log(shippingAddress);
   } else if (
     Array.isArray(order) &&
     order.length > 0 &&
@@ -34,9 +33,8 @@ export default function Profile() {
   ) {
     // Use the shippingAddress from the first order if available
     shippingAddress = order[order.length - 1]?.shippingAddress;
-    console.log(cart);
   }
-  console.log(orders);
+
   const dispatch = useDispatch();
 
   return (

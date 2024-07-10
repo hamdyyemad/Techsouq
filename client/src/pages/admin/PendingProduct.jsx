@@ -22,14 +22,12 @@ export default function PendingProduct() {
   const rejectProductHandler = async (p) => {
     if (window.confirm("Are you sure you want to reject this product?")) {
       try {
-        console.log(p);
         // Use the product ID to construct the URL
         const url = `${BASE_URL}/products/seller/${p._id}`;
 
         // Send the DELETE request
         const res = await axios.delete(url, { headers });
 
-        console.log(res);
         toast.error("Product Rejected");
         // Refetch the products after deletion
         refetch();
@@ -47,13 +45,11 @@ export default function PendingProduct() {
         // Send the DELETE request
         const res = await axios.post(url, p, { headers });
 
-        console.log(res);
-
         const url2 = `${BASE_URL}/products/seller/${p._id}`;
 
         // Send the DELETE request
         const res2 = await axios.delete(url2, { headers });
-        console.log(res2);
+
         // Refetch the products after deletion
         toast.success("Product Approved");
         refetch();

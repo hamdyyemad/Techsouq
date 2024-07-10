@@ -23,8 +23,7 @@ export default function Order() {
   const { t } = useTranslation();
   const userID = user.id;
   const role = user.role;
-  console.log(role);
-  console.log(userID);
+
   const dispatch = useDispatch();
   const token = user.token;
 
@@ -35,11 +34,11 @@ export default function Order() {
     encodeURIComponent(userID),
     encodeURIComponent(role)
   );
-  console.log(data?.config);
+
   const location = useLocation();
 
   const order = data?.data?.order || location?.state?.order;
-  console.log(order);
+
   if (order) {
     const {
       orderItems,
@@ -95,7 +94,6 @@ export default function Order() {
   function onApprove(data, actions) {
     return actions.order.capture().then(async function (details) {
       try {
-        console.log(details);
         await payOrder({ id, details });
         refetch();
         toast.success("Order is paid");
@@ -126,7 +124,6 @@ export default function Order() {
         ],
       })
       .then((orderID) => {
-        console.log("order id is:" + orderID);
         return orderID;
       });
   }

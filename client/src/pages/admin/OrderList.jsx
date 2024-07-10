@@ -23,7 +23,6 @@ export default function OrderList() {
       "user-id": encodeURIComponent(user?.id),
     };
     async function order() {
-      console.log(headers);
       const res = await axios.get(`${BASE_URL}/orders/${id}`, {
         headers: headers,
       });

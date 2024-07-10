@@ -18,12 +18,12 @@ export default async function productsLoader({ params, request }) {
     const limit = 6; // Set the same limit as in the backend
     const baseURL = `${BASE_URL}/products?pageNumber=${pageNumber}&limit=${limit}`;
     const queryParams = [];
-    console.log(category);
+
     if (keyword) queryParams.push(`keyword=${encodeURIComponent(keyword)}`);
     if (sort) queryParams.push(`sort=${encodeURIComponent(sort)}`);
     if (brand) queryParams.push(`brand=${encodeURIComponent(brand)}`);
     if (category) queryParams.push(`category=${encodeURIComponent(category)}`);
-    console.log(queryParams);
+
     const url = `${baseURL}${
       queryParams.length > 0 ? `&${queryParams.join("&")}` : ""
     }`;

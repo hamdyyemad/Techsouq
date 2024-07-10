@@ -19,14 +19,12 @@ export default function VanDetails() {
   const [rating, setRating] = useState(0);
   const location = useLocation();
   const product = useLoaderData();
-  console.log(product);
 
   const { userInfo } = useSelector((state) => state.auth);
   const hideReviewsText = false;
 
   const search = location?.state?.search || "";
 
-  console.log(search);
   const headers = {
     Authorization: `Bearer ${userInfo?.token}`,
     authorization: `Bearer ${userInfo?.token}`,
@@ -83,7 +81,7 @@ export default function VanDetails() {
           headers: headers,
         }
       );
-      console.log(res);
+
       toast.success("Added successfully");
       window.location.reload();
     } catch (error) {
@@ -94,13 +92,9 @@ export default function VanDetails() {
   };
   useEffect(() => {
     const isReviewed = product.reviews.some((i) => {
-      console.log("_id:" + i.user);
-      console.log("userInfo:" + userInfo?.id);
-
       return i.user.toString() === userInfo?.id.toString();
     });
     setIsUserAlreadyReviewd(isReviewed);
-    console.log(isReviewed);
   }, [product.reviews, userInfo?.id]);
   return (
     <div>

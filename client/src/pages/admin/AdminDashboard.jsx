@@ -50,11 +50,6 @@ export default function AdminDashboard() {
   const dailySales = data3?.data?.dailySales;
   const salesPercentage = data3?.data?.salesPercentage;
 
-  console.log(totalProductsInStock);
-  console.log(weeklySales);
-  console.log(totalSales);
-  console.log(dailySales);
-  console.log(salesPercentage);
   return (
     <section className="w-[100wh-60px] lg:w-[100wh-250px]  py-5 pl-5 pr-0 mr-0 right-0 transition-all duration-500 ease-in-out xs:p-0">
       <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 dark:bg-[#151725] ">

@@ -86,7 +86,7 @@ export default function UserEdit() {
           headers: headers,
         }
       );
-      console.log(res);
+
       toast.success("User updated");
       refetch();
       navigate("/admin/userlist");

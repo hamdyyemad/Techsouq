@@ -27,12 +27,11 @@ export default function ResetPassword() {
   //   );
 
   //   // Use userId and token as needed for your reset password logic
-  //   console.log(document.cookie);
+  //
   //   setUserId(userId);
   //   setToken(token);
   // }, []);
-  console.log("token is" + token);
-  console.log("userId is" + userId);
+
   const handleResetPassword = async (e) => {
     e.preventDefault();
     if (!password.trim()) {
@@ -58,6 +57,7 @@ export default function ResetPassword() {
         // Handle success, show a message to the user
         toast.success("Password reset link sent successfully");
         console.log("Password reset link sent successfully");
+
         navigate("/login");
       } else {
         // Handle error, show an error message to the user

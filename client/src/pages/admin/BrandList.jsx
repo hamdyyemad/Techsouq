@@ -15,7 +15,7 @@ export default function BrandList() {
   const { t } = useTranslation();
   const { data, isLoading, error, refetch } = useGetBrandsQuery();
   const brands = data?.data?.listOfBrands;
-  console.log(data);
+
   const user = useSelector((store) => store.auth.userInfo);
   const token = user.token;
   const headers = {
@@ -34,7 +34,6 @@ export default function BrandList() {
         );
 
         refetch();
-        console.log(response);
       } catch (err) {
         console.log(err);
         toast.error(err?.response?.data?.message || err.message);

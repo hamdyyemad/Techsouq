@@ -67,7 +67,7 @@ export default function ProductPost() {
 
     try {
       const res = await uploadProductImage(formData).unwrap();
-      console.log(res);
+
       toast.success(res?.message);
       setImage(res?.image);
       // setImage(e.target.files[0]); // Set the File object here
@@ -113,7 +113,7 @@ export default function ProductPost() {
     validateCategory(values.category);
     validateDescription(values.description);
     validateLongDescription(values.longDescription);
-    console.log(values);
+
     // Check for validation errors
     if (
       errors.name ||
@@ -134,7 +134,7 @@ export default function ProductPost() {
       specifications: specifications.filter((spec) => spec.key && spec.value), // Remove empty specifications
       user: user?.id,
     };
-    console.log(transformedValues);
+
     try {
       const emptyFields = Object.values(transformedValues).some(
         (value) => !value
@@ -153,7 +153,7 @@ export default function ProductPost() {
           headers: headers,
         }
       );
-      console.log(res);
+
       setIsLoading(false);
       toast.success("Product is under review");
       navigate("/seller/productlist");

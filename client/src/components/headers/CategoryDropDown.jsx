@@ -17,7 +17,6 @@ export default function CategoryDropDown() {
     return { _id: el._id, name: t(`categories.${el.name}`), href: el.name };
   });
 
-  console.log(subCategories);
   // {t("register.title")}
   // const categories = [
   //   { name: t(`${subCategories}`), to: "Laptops" },

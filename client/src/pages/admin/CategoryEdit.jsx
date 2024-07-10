@@ -61,7 +61,6 @@ export default function CategoryEdit() {
         }
       );
 
-      console.log(res);
       toast.success("Category updated");
       refetch();
       navigate("/admin/categorylist");

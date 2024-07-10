@@ -49,8 +49,6 @@ export default function ProductEdit() {
   const brandData = brandTarget?.data?.listOfBrands;
   const categoryData = categoryTarget?.data?.listOfCategories;
 
-  console.log(selectedBrand);
-  console.log(selectedCategory);
   const {
     errors,
     validateName,
@@ -76,7 +74,7 @@ export default function ProductEdit() {
 
     try {
       const res = await uploadProductImage(formData).unwrap();
-      // console.log(res);
+      //
       toast.success(res?.message);
       setImage(res?.image);
       // setImage(e.target.files[0]); // Set the File object here
@@ -132,7 +130,7 @@ export default function ProductEdit() {
     validateCategory(values.category);
     validateDescription(values.description);
     validateLongDescription(values.longDescription);
-    // console.log(values);
+    //
     // Check for validation errors
 
     if (
@@ -168,7 +166,7 @@ export default function ProductEdit() {
       await axios.put(`${BASE_URL}/products/${id}`, transformedValues, {
         headers: headers,
       });
-      // console.log(res);
+      //
       toast.success("Product updated");
       refetch();
       navigate("/admin/productlist");

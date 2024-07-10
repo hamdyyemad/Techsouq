@@ -6,7 +6,7 @@ export const apiSlice = createApi({
     prepareHeaders: (headers, { getState, endpoint }) => {
       // Add your logic to get the user token from the Redux state
       // Replace 'user.token.access' with the correct path to your token
-      console.log("Preparing headers...");
+
       if (getState().auth.userInfo) {
         const user = getState().auth.userInfo;
         const { id, token, role } = user;

@@ -8,7 +8,7 @@ export default async function productDetailsLoader({ params }) {
     // First URL
     const response1 = await axios.get(url1);
     const { data } = response1.data;
-    // console.log(data);
+    //
     const product = data.product;
     return product;
   } catch (error1) {
@@ -16,7 +16,7 @@ export default async function productDetailsLoader({ params }) {
       // Second URL
       const response2 = await axios.get(url2);
       const { data } = response2.data;
-      // console.log(data);
+      //
       const product = data.product;
       return product;
     } catch (error2) {

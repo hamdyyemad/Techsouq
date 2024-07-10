@@ -25,7 +25,7 @@ export default function ProductList() {
         const res = await axios.post(`${BASE_URL}/products`, null, {
           headers: headers,
         });
-        console.log(res);
+
         refetch();
       } catch (err) {
         toast.error(err?.data?.message || err.error);
@@ -40,8 +40,6 @@ export default function ProductList() {
 
         // Send the DELETE request
         const res = await axios.delete(url, { headers });
-
-        console.log(res);
 
         // Refetch the products after deletion
         refetch();

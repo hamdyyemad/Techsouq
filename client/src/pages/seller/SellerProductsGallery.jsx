@@ -31,7 +31,6 @@ export default function SellerProductsGallery() {
     : [];
 
   const product = [...pendingProduct, ...acceptedProduct];
-  console.log(product);
 
   return (
     <div className="xs:min-w-full bg-gray-100 min-w-max h-screen	dark:bg-[#151725] ">

@@ -18,7 +18,7 @@ export default function SellerDashboard() {
   const user = useSelector((store) => store.auth.userInfo);
   const id = user.id;
   const { data } = useGetSellerAcceptedProductsQuery(id);
-  console.log(data);
+
   //   const { data: data3 } = useGetOrdersQuery();
   const { data: data4 } = useGetSellerPendingProductsQuery(id);
   const { data: data3 } = useGetSellerProfitQuery(id, user.token);
@@ -30,12 +30,6 @@ export default function SellerDashboard() {
   const totalPaidOrders = data3?.data?.totalPaidOrders;
   const totalUnpaidOrders = data3?.data?.totalUnpaidOrders;
 
-  console.log(totalProductsInStock);
-  console.log(weeklySellerSales);
-  console.log(totalSellerProfits);
-  console.log(dailySellerSales);
-  console.log(salesPercentage);
-  console.log(totalUnpaidOrders);
   return (
     <section className="w-[100wh-60px] lg:w-[100wh-250px]  py-5 pl-5 pr-0 mr-0 right-0 transition-all duration-500 ease-in-out xs:p-0">
       <div className="bg-white shadow rounded-lg p-4 sm:p-6 xl:p-8 dark:bg-[#151725] ">

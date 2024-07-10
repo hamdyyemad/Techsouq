@@ -368,9 +368,6 @@ export default function Shipping() {
                     }}
                     id="postal"
                     className="w-full border py-2 px-3"
-                    onBlur={() =>
-                      setPhoneNumberCodeError(validatePhoneNumber(phoneNumber))
-                    }
                   />
                   <p className="text-red-500">{phoneNumberCodeError}</p>
                 </div>
@@ -390,7 +387,6 @@ export default function Shipping() {
                         ""
                       );
                       setPostalCode(numericValue);
-                      validatePostalCode();
                     }}
                     id="postal"
                     className="w-full border py-2 px-3"

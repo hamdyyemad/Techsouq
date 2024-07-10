@@ -18,19 +18,19 @@ export const useFetchCities = (
         let response;
         if (!selectedCountry.value) {
           const code_response = await fetch(
-            `http://api.geonames.org/searchJSON?q=${selectedCountry}&featureClass=A&featureCode=PCLI&maxRows=1&username=${
+            `https://secure.geonames.org/searchJSON?q=${selectedCountry}&featureClass=A&featureCode=PCLI&maxRows=1&username=${
               import.meta.env.VITE_COUNTRY_USERNAME
             }`
           );
           const data2 = await code_response.json();
           response = await fetch(
-            `http://api.geonames.org/searchJSON?country=${
+            `https://secure.geonames.org/searchJSON?country=${
               data2.geonames[0].countryCode
             }&username=${import.meta.env.VITE_COUNTRY_USERNAME}`
           );
         } else {
           response = await fetch(
-            `http://api.geonames.org/searchJSON?country=${
+            `https://secure.geonames.org/searchJSON?country=${
               selectedCountry.value
             }&username=${import.meta.env.VITE_COUNTRY_USERNAME}`
           );

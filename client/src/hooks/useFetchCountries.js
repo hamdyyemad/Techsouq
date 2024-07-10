@@ -15,7 +15,7 @@ export const useFetchCountries = (
     try {
       setIsLoadingCountry(true);
       const response = await fetch(
-        `http://api.geonames.org/countryInfoJSON?username=${
+        `https://secure.geonames.org/countryInfoJSON?username=${
           import.meta.env.VITE_COUNTRY_USERNAME
         }`
       );

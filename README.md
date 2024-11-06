@@ -1,4 +1,4 @@
-# TechSouq 
+# Techsouq 
 Multilingual E-commerce Website (MERN STACK)
 <a> https://techsouq.vercel.app </a>
 

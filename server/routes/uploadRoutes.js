@@ -30,10 +30,26 @@ function fileFilter(req, file, cb) {
 const upload = multer({ storage, fileFilter });
 const uploadSingleImage = upload.single("image");
 
+// router.post("/uploads", (req, res) => {
+//   uploadSingleImage(req, res, function (err) {
+//     if (err) {
+//       return res.status(400).send({ message: err.message });
+//     }
+
+//     res.status(200).send({
+//       message: "Image uploaded successfully",
+//       image: `/${req.file.path}`,
+//     });
+//   });
+// });
 router.post("/uploads", (req, res) => {
   uploadSingleImage(req, res, function (err) {
     if (err) {
       return res.status(400).send({ message: err.message });
+    }
+
+    if (!req.file) {
+      return res.status(400).send({ message: "No file uploaded" });
     }
 
     res.status(200).send({
